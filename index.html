@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DigiLibrary - Your Digital Reading Companion</title>
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <i class="fas fa-book-open"></i>
+                <span>DigiLibrary</span>
+            </div>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#books">Books</a></li>
+                <li><a href="#videos">Videos</a></li>
+                <li>
+                    <input type="checkbox" id="dark-mode-toggle" class="dark-mode-toggle">
+                    <label for="dark-mode-toggle" class="dark-mode-btn">
+                        <i class="fas fa-moon"></i>
+                        <i class="fas fa-sun"></i>
+                    </label>
+                </li>
+                <li><a href="login.html" class="btn btn-primary">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to DigiLibrary</h1>
+            <p class="hero-description">
+                Your gateway to knowledge and learning. Discover thousands of books, educational videos, 
+                and digital resources in our modern library management system. Access your favorite content 
+                anytime, anywhere with our user-friendly platform.
+            </p>
+            <div class="hero-buttons">
+                <a href="#books" class="btn btn-primary">Explore Books</a>
+                <a href="login.html" class="btn btn-secondary">Get Started</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="floating-books">
+                <div class="book book-1"><i class="fas fa-book"></i></div>
+                <div class="book book-2"><i class="fas fa-bookmark"></i></div>
+                <div class="book book-3"><i class="fas fa-graduation-cap"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">About DigiLibrary</h2>
+                    <p class="about-description">
+                        Welcome to DigiLibrary, your premier digital gateway to knowledge and learning. We are dedicated to providing 
+                        seamless access to thousands of books, educational resources, and digital content that empowers minds and 
+                        transforms lives.
+                    </p>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-book-open"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Vast Collection</h3>
+                                <p>Access over 10,000 books across all genres and subjects</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3>24/7 Access</h3>
+                                <p>Browse and borrow books anytime, anywhere</p>
+                            </div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Community</h3>
+                                <p>Join thousands of readers in our learning community</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form-container">
+                    <h3>Get In Touch</h3>
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+                            <label for="name">Name</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Your Email" required>
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                            <label for="message">Message</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                    <div class="social-media">
+                        <h4>Follow Us</h4>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-icon twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-icon instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-icon linkedin">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="social-icon youtube">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="15000">0</div>
+                    <div class="stat-label">Books Available</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="8500">0</div>
+                    <div class="stat-label">Active Members</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="75000">0</div>
+                    <div class="stat-label">Books Borrowed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="99">0</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Books Section -->
+    <section class="books-section" id="books">
+        <div class="container">
+            <h2>Popular Books</h2>
+            <div class="books-grid">
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/The Great Gatsby.png" alt="The Great Gatsby">
+                    </div>
+                    <div class="book-info">
+                        <h3>The Great Gatsby</h3>
+                        <p class="book-author">by F. Scott Fitzgerald</p>
+                        <div class="book-status status-available">
+                            <i class="fas fa-check-circle"></i>
+                            Available
+                        </div>
+                        <div class="book-actions">
+                            <a href="login.html" class="btn btn-primary btn-small">View Details</a>
+                            <a href="login.html" class="btn btn-secondary btn-small">Borrow</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/To Kill a Mockingbird.png" alt="To Kill a Mockingbird">
+                    </div>
+                    <div class="book-info">
+                        <h3>To Kill a Mockingbird</h3>
+                        <p class="book-author">by Harper Lee</p>
+                        <div class="book-status status-borrowed">
+                            <i class="fas fa-times-circle"></i>
+                            Borrowed
+                        </div>
+                        <div class="book-actions">
+                            <a href="#" class="btn btn-primary btn-small">View Details</a>
+                            <a href="#" class="btn btn-secondary btn-small disabled">Unavailable</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/1984.png" alt="1984">
+                    </div>
+                    <div class="book-info">
+                        <h3>1984</h3>
+                        <p class="book-author">by George Orwell</p>
+                        <div class="book-status status-available">
+                            <i class="fas fa-check-circle"></i>
+                            Available
+                        </div>
+                        <div class="book-actions">
+                            <a href="login.html" class="btn btn-primary btn-small">View Details</a>
+                            <a href="login.html" class="btn btn-secondary btn-small">Borrow</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/Pride and Prejudice.png" alt="Pride and Prejudice">
+                    </div>
+                    <div class="book-info">
+                        <h3>Pride and Prejudice</h3>
+                        <p class="book-author">by Jane Austen</p>
+                        <div class="book-status status-available">
+                            <i class="fas fa-check-circle"></i>
+                            Available
+                        </div>
+                        <div class="book-actions">
+                            <a href="login.html" class="btn btn-primary btn-small">View Details</a>
+                            <a href="login.html" class="btn btn-secondary btn-small">Borrow</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/Harry Potter.jpg" alt="Harry Potter and the Philosopher's Stone">
+                    </div>
+                    <div class="book-info">
+                        <h3>Harry Potter and the Philosopher's Stone</h3>
+                        <p class="book-author">by J.K. Rowling</p>
+                        <div class="book-status status-available">
+                            <i class="fas fa-check-circle"></i>
+                            Available
+                        </div>
+                        <div class="book-actions">
+                            <a href="login.html" class="btn btn-primary btn-small">View Details</a>
+                            <a href="login.html" class="btn btn-secondary btn-small">Borrow</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/Lord of the Rings.jpg" alt="The Lord of the Rings">
+                    </div>
+                    <div class="book-info">
+                        <h3>The Lord of the Rings</h3>
+                        <p class="book-author">by J.R.R. Tolkien</p>
+                        <div class="book-status status-borrowed">
+                            <i class="fas fa-times-circle"></i>
+                            Borrowed
+                        </div>
+                        <div class="book-actions">
+                            <a href="#" class="btn btn-primary btn-small">View Details</a>
+                            <a href="#" class="btn btn-secondary btn-small disabled">Unavailable</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals Section -->
+    <section class="books-section">
+        <div class="container">
+            <h2>New Arrivals</h2>
+            <div class="books-grid">
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/Atomic Habits.png" alt="Atomic Habits">
+                    </div>
+                    <div class="book-info">
+                        <h3>Atomic Habits</h3>
+                        <p class="book-author">by James Clear</p>
+                        <div class="book-status status-available">
+                            <i class="fas fa-check-circle"></i>
+                            Available
+                        </div>
+                        <div class="book-actions">
+                            <a href="login.html" class="btn btn-primary btn-small">View Details</a>
+                            <a href="login.html" class="btn btn-secondary btn-small">Borrow</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/Sapiens.png" alt="Sapiens">
+                    </div>
+                    <div class="book-info">
+                        <h3>Sapiens</h3>
+                        <p class="book-author">by Yuval Noah Harari</p>
+                        <div class="book-status status-available">
+                            <i class="fas fa-check-circle"></i>
+                            Available
+                        </div>
+                        <div class="book-actions">
+                            <a href="login.html" class="btn btn-primary btn-small">View Details</a>
+                            <a href="login.html" class="btn btn-secondary btn-small">Borrow</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/The Midnight Library.png" alt="The Midnight Library">
+                    </div>
+                    <div class="book-info">
+                        <h3>The Midnight Library</h3>
+                        <p class="book-author">by Matt Haig</p>
+                        <div class="book-status status-available">
+                            <i class="fas fa-check-circle"></i>
+                            Available
+                        </div>
+                        <div class="book-actions">
+                            <a href="login.html" class="btn btn-primary btn-small">View Details</a>
+                            <a href="login.html" class="btn btn-secondary btn-small">Borrow</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/Educated.png" alt="Educated">
+                    </div>
+                    <div class="book-info">
+                        <h3>Educated</h3>
+                        <p class="book-author">by Tara Westover</p>
+                        <div class="book-status status-available">
+                            <i class="fas fa-check-circle"></i>
+                            Available
+                        </div>
+                        <div class="book-actions">
+                            <a href="login.html" class="btn btn-primary btn-small">View Details</a>
+                            <a href="login.html" class="btn btn-secondary btn-small">Borrow</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/The Alchemist.jpg" alt="The Alchemist">
+                    </div>
+                    <div class="book-info">
+                        <h3>The Alchemist</h3>
+                        <p class="book-author">by Paulo Coelho</p>
+                        <div class="book-status status-available">
+                            <i class="fas fa-check-circle"></i>
+                            Available
+                        </div>
+                        <div class="book-actions">
+                            <a href="login.html" class="btn btn-primary btn-small">View Details</a>
+                            <a href="login.html" class="btn btn-secondary btn-small">Borrow</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/Dune.jpg" alt="Dune">
+                    </div>
+                    <div class="book-info">
+                        <h3>Dune</h3>
+                        <p class="book-author">by Frank Herbert</p>
+                        <div class="book-status status-borrowed">
+                            <i class="fas fa-times-circle"></i>
+                            Borrowed
+                        </div>
+                        <div class="book-actions">
+                            <a href="#" class="btn btn-primary btn-small">View Details</a>
+                            <a href="#" class="btn btn-secondary btn-small disabled">Unavailable</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="book-card">
+                    <div class="book-cover-image">
+                        <img src="images/The Seven Husbands.jpg" alt="The Seven Husbands of Evelyn Hugo">
+                    </div>
+                    <div class="book-info">
+                        <h3>The Seven Husbands of Evelyn Hugo</h3>
+                        <p class="book-author">by Taylor Jenkins Reid</p>
+                        <div class="book-status status-available">
+                            <i class="fas fa-check-circle"></i>
+                            Available
+                        </div>
+                        <div class="book-actions">
+                            <a href="login.html" class="btn btn-primary btn-small">View Details</a>
+                            <a href="login.html" class="btn btn-secondary btn-small">Borrow</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Videos Section -->
+    <section id="videos" class="videos-section">
+        <div class="container">
+            <h2 class="section-title">Educational Videos</h2>
+            <div class="videos-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/MSYw502dJNY" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <h3>How and Why We Read: Crash Course Literature</h3>
+                    <p>Explore the fundamentals of literature and storytelling with John Green</p>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/x6KrMAWc0fc" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <h3>Digital Library Systems</h3>
+                    <p>Learn how modern digital library systems work and their benefits</p>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <iframe src="https://www.youtube.com/embed/00cY0Nj94MM" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <h3>Academic Research Methods</h3>
+                    <p>Master essential research techniques and methodologies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Library Rules Section -->
+    <section id="rules" class="rules-section">
+        <div class="container">
+            <h2 class="section-title">Library Rules & Information</h2>
+            <div class="rules-grid">
+                <div class="rules-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Operation Hours</h3>
+                    <ul>
+                        <li><strong>Monday - Friday:</strong> 8:00 AM - 8:00 PM</li>
+                        <li><strong>Saturday:</strong> 9:00 AM - 6:00 PM</li>
+                        <li><strong>Sunday:</strong> 10:00 AM - 4:00 PM</li>
+                        <li><strong>Holidays:</strong> Closed</li>
+                    </ul>
+                </div>
+                <div class="rules-card">
+                    <i class="fas fa-book-reader"></i>
+                    <h3>Borrowing Rules</h3>
+                    <ul>
+                        <li>Maximum 5 books per user</li>
+                        <li>Loan period: 14 days</li>
+                        <li>Renewals: Up to 2 times</li>
+                        <li>Reserve books: 3 days hold</li>
+                    </ul>
+                </div>
+                <div class="rules-card">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Penalties</h3>
+                    <ul>
+                        <li><strong>Late Return:</strong> $0.50 per day</li>
+                        <li><strong>Lost Book:</strong> Full replacement cost + $10 processing fee</li>
+                        <li><strong>Damaged Book:</strong> Repair cost or replacement</li>
+                        <li><strong>Overdue 30+ days:</strong> Account suspension</li>
+                    </ul>
+                </div>
+                <div class="rules-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Library Conduct</h3>
+                    <ul>
+                        <li>Maintain quiet environment</li>
+                        <li>No food or drinks near books</li>
+                        <li>Handle materials with care</li>
+                        <li>Report damaged items immediately</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>DigiLibrary</h3>
+                    <p>Your digital gateway to knowledge and learning.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#books">Books</a></li>
+                        <li><a href="#videos">Videos</a></li>
+                        <li><a href="#rules">Rules</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p><i class="fas fa-phone"></i> (+27) 12-345-6789</p>
+                    <p><i class="fas fa-envelope"></i> info@digilibrary.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Library St, Durban</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 DigiLibrary. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Animated Background Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- JavaScript Modules -->
+    <script src="js/auth.js"></script>
+    <script src="js/books.js"></script>
+    <script src="js/animations.js"></script>
+    <script>
+        // Enhanced main page functionality
+        class MainPageManager {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.setupNavigation();
+                this.setupSearch();
+                this.setupContactForm();
+                this.loadPopularBooks();
+                this.loadNewArrivals();
+                this.setupBookInteractions();
+            }
+
+            setupNavigation() {
+                // Smooth scrolling for navigation links
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            animationManager.smoothScrollTo(target, 80);
+                        }
+                    });
+                });
+            }
+
+            setupSearch() {
+                // Enhanced search functionality
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput) {
+                    searchInput.addEventListener('input', (e) => {
+                        this.performSearch(e.target.value);
+                    });
+                }
+            }
+
+            performSearch(query) {
+                if (!query.trim()) return;
+                
+                const results = bookManager.searchBooks(query);
+                this.displaySearchResults(results);
+            }
+
+            displaySearchResults(books) {
+                // Clear existing results and show search results
+                const booksSection = document.querySelector('.books-section .books-grid');
+                if (!booksSection) return;
+                
+                if (books.length === 0) {
+                    booksSection.innerHTML = '<p class="no-results">No books found matching your search.</p>';
+                    return;
+                }
+                
+                booksSection.innerHTML = books.map(book => this.createBookCard(book)).join('');
+                
+                // Add fade-in animation
+                const bookCards = booksSection.querySelectorAll('.book-card');
+                bookCards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.5s ease-out';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            }
+
+            setupContactForm() {
+                const contactForm = document.getElementById('contactForm');
+                if (contactForm) {
+                    contactForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.handleContactSubmission(e.target);
+                    });
+                }
+            }
+
+            handleContactSubmission(form) {
+                const formData = new FormData(form);
+                const name = formData.get('name');
+                const email = formData.get('email');
+                const message = formData.get('message');
+                
+                if (!name || !email || !message) {
+                    this.showNotification('Please fill in all fields', 'error');
+                    return;
+                }
+                
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                    submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                    
+                    form.reset();
+                    this.showNotification('Message sent successfully!', 'success');
+                    
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.style.background = '';
+                    }, 3000);
+                }, 2000);
+            }
+
+            loadPopularBooks() {
+                const popularBooks = bookManager.getPopularBooks(6);
+                this.updateBookSection('.books-section:first-of-type .books-grid', popularBooks);
+            }
+
+            loadNewArrivals() {
+                const newArrivals = bookManager.getNewArrivals(7);
+                this.updateBookSection('.books-section:nth-of-type(2) .books-grid', newArrivals);
+            }
+
+            updateBookSection(selector, books) {
+                const container = document.querySelector(selector);
+                if (!container) return;
+
+                container.innerHTML = books.map(book => this.createBookCard(book)).join('');
+            }
+
+            createBookCard(book) {
+                return `
+                    <div class="book-card fade-in" data-book-id="${book.id}">
+                        <div class="book-cover-image">
+                            <img src="${book.cover}" alt="${book.title}" loading="lazy" 
+                                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjNEY0NkU1Ii8+CjxyZWN0IHg9IjIwIiB5PSI0MCIgd2lkdGg9IjE2MCIgaGVpZ2h0PSIyMjAiIGZpbGw9IiM2MzY2RjEiLz4KPHN2ZyB4PSI3MCIgeT0iMTIwIiB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0id2hpdGUiPgo8cGF0aCBkPSJNMTQgMlY4TDIwIDJNMjAgMlYxNEgyMFYyMEMxOSAyMSAxOCAyMiAxNyAyMkg3QzYgMjIgNSAyMSA0IDIwVjRDNCAzIDUgMiA2IDJIMTRaIi8+Cjwvc3ZnPgo8L3N2Zz4K';">
+                            <div class="book-overlay">
+                                <button class="btn-favorite" title="Add to favorites">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="book-info">
+                            <h3>${book.title}</h3>
+                            <p class="book-author">by ${book.author}</p>
+                            <div class="book-rating">
+                                ${this.createStarRating(book.rating)}
+                                <span>${book.rating}</span>
+                            </div>
+                            <div class="book-status ${book.available ? 'status-available' : 'status-borrowed'}">
+                                <i class="fas ${book.available ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                                ${book.available ? 'Available' : 'Borrowed'}
+                            </div>
+                            <div class="book-actions">
+                                <a href="#" class="btn btn-primary btn-small">View Details</a>
+                                <a href="login.html" class="btn btn-secondary btn-small ${!book.available ? 'disabled' : ''}">
+                                    ${book.available ? 'Borrow' : 'Unavailable'}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            createStarRating(rating) {
+                const fullStars = Math.floor(rating);
+                const hasHalfStar = rating % 1 >= 0.5;
+                let starsHTML = '';
+                
+                for (let i = 0; i < fullStars; i++) {
+                    starsHTML += '<i class="fas fa-star"></i>';
+                }
+                
+                if (hasHalfStar) {
+                    starsHTML += '<i class="fas fa-star-half-alt"></i>';
+                }
+                
+                const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                for (let i = 0; i < emptyStars; i++) {
+                    starsHTML += '<i class="far fa-star"></i>';
+                }
+                
+                return starsHTML;
+            }
+
+            setupBookInteractions() {
+                document.addEventListener('click', (e) => {
+                    if (e.target.closest('.btn-favorite')) {
+                        e.preventDefault();
+                        this.showNotification('Please login to add favorites', 'info');
+                    }
+                });
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.innerHTML = `
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 
+                                   type === 'error' ? 'fa-exclamation-circle' : 
+                                   'fa-info-circle'}"></i>
+                    <span>${message}</span>
+                    <button class="notification-close">&times;</button>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000);
+                
+                notification.querySelector('.notification-close').addEventListener('click', () => {
+                    notification.remove();
+                });
+            }
+        }
+
+        // Create animated particles (legacy function)
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        function smoothScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Enhanced search functionality
+        const searchInput = document.getElementById('searchInput');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                const bookCards = document.querySelectorAll('.book-card');
+                
+                bookCards.forEach(card => {
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const author = card.querySelector('.book-author').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || author.includes(searchTerm)) {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeInUp 0.5s ease-out';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Contact form functionality
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(contactForm);
+                const name = formData.get('name');
+                const email = formData.get('email');
+                const message = formData.get('message');
+                
+                // Simple validation
+                if (!name || !email || !message) {
+                    alert('Please fill in all fields');
+                    return;
+                }
+                
+                // Simulate form submission
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
+                    submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                    
+                    // Reset form
+                    contactForm.reset();
+                    
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.style.background = '';
+                    }, 3000);
+                }, 2000);
+            });
+        }
+
+        // Animated counters for stats
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (current > target) current = target;
+                        
+                        if (target === 98) {
+                            counter.textContent = Math.ceil(current) + '%';
+                        } else {
+                            counter.textContent = Math.ceil(current).toLocaleString();
+                        }
+                        
+                        requestAnimationFrame(updateCounter);
+                    }
+                };
+                
+                updateCounter();
+            });
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            document.addEventListener('DOMContentLoaded', () => {
+                // Initialize main page manager
+                window.mainPageManager = new MainPageManager();
+                
+                // Initialize animations
+                if (typeof animationManager !== 'undefined') {
+                    animationManager.init();
+                }
+                
+                // Create particles
+                createParticles();
+                
+                // Initialize counters when they come into view
+                const observerOptions = {
+                    threshold: 0.5,
+                    rootMargin: '0px 0px -100px 0px'
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const counter = entry.target;
+                            const target = parseInt(counter.getAttribute('data-target'));
+                            animateCounter(counter, target);
+                            observer.unobserve(counter);
+                        }
+                    });
+                }, observerOptions);
+                
+                document.querySelectorAll('.stat-number').forEach(counter => {
+                    observer.observe(counter);
+                });
+            });
+        }
+
+        // Intersection Observer for animations
+        function setupScrollAnimations() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all book cards and sections
+            document.querySelectorAll('.book-card, .video-card, .rules-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // Dark mode functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            
+            // Initialize main page manager
+            const mainPageManager = new MainPageManager();
+            
+            // Initialize particles and animations
+            createParticles();
+            
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                if (darkModeToggle) darkModeToggle.checked = true;
+            }
+            
+            // Toggle dark mode
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('change', function() {
+                    if (this.checked) {
+                        document.body.classList.add('dark-mode');
+                        localStorage.setItem('darkMode', 'enabled');
+                    } else {
+                        document.body.classList.remove('dark-mode');
+                        localStorage.setItem('darkMode', null);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

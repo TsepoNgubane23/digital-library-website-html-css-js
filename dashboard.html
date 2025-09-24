@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - DigiLibrary</title>
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard-style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-book-open"></i>
+                <span>DigiLibrary</span>
+            </div>
+            <div class="user-menu">
+                <div class="user-info">
+                    <img src="images/Philasande.jpg" alt="User" class="user-avatar">
+                    <span class="user-name" id="userName">User</span>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-btn">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#profile"><i class="fas fa-user"></i> Profile</a>
+                        <a href="#settings"><i class="fas fa-cog"></i> Settings</a>
+                        <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="#overview" class="menu-item active"><i class="fas fa-tachometer-alt"></i> Overview</a></li>
+                <li><a href="#borrowed" class="menu-item"><i class="fas fa-book"></i> Borrowed Books</a></li>
+                <li><a href="#browse" class="menu-item"><i class="fas fa-search"></i> Browse Books</a></li>
+                <li><a href="#favorites" class="menu-item"><i class="fas fa-heart"></i> Favorites</a></li>
+                <li><a href="#reading-progress" class="menu-item"><i class="fas fa-chart-line"></i> Reading Progress</a></li>
+                <li><a href="#recommendations" class="menu-item"><i class="fas fa-magic"></i> Recommendations</a></li>
+                <li><a href="#community" class="menu-item"><i class="fas fa-users"></i> Community</a></li>
+                <li><a href="#achievements" class="menu-item"><i class="fas fa-trophy"></i> Achievements</a></li>
+                <li><a href="#history" class="menu-item"><i class="fas fa-history"></i> History</a></li>
+                <li><a href="#notifications" class="menu-item"><i class="fas fa-bell"></i> Notifications</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Overview Section -->
+            <section id="overview" class="dashboard-section active">
+                <div class="section-header">
+                    <h1>Welcome back, <span id="welcomeName">User</span>!</h1>
+                    <p>Here's your library activity overview</p>
+                </div>
+
+                <div class="overview-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>3</h3>
+                            <p>Books Borrowed</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>1</h3>
+                            <p>Overdue Books</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>8</h3>
+                            <p>Favorites</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>24</h3>
+                            <p>Books Read</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="borrowed-books">
+                    <h3>Currently Borrowed</h3>
+                    <div class="borrowed-books-list">
+                        <div class="borrowed-book">
+                            <div class="borrowed-book-cover-image">
+                                <img src="images/The Great Gatsby.png" alt="The Great Gatsby">
+                            </div>
+                            <div class="borrowed-book-info">
+                                <h3>The Great Gatsby</h3>
+                                <p>by F. Scott Fitzgerald</p>
+                                <p class="due-date overdue">Due: Aug 30, 2024</p>
+                            </div>
+                            <div class="borrowed-book-actions">
+                                <a href="#" class="btn btn-primary btn-small">Renew</a>
+                                <a href="#" class="btn btn-secondary btn-small">Return</a>
+                            </div>
+                        </div>
+                        <div class="borrowed-book">
+                            <div class="borrowed-book-cover-image">
+                                <img src="images/To Kill a Mockingbird.png" alt="To Kill a Mockingbird">
+                            </div>
+                            <div class="borrowed-book-info">
+                                <h3>To Kill a Mockingbird</h3>
+                                <p>by Harper Lee</p>
+                                <p class="due-date due-soon">Due: Sep 10, 2024</p>
+                            </div>
+                            <div class="borrowed-book-actions">
+                                <a href="#" class="btn btn-primary btn-small">Renew</a>
+                                <a href="#" class="btn btn-secondary btn-small">Return</a>
+                            </div>
+                        </div>
+                        <div class="borrowed-book">
+                            <div class="borrowed-book-cover-image">
+                                <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1398034300/5107.jpg" alt="The Catcher in the Rye">
+                            </div>
+                            <div class="borrowed-book-info">
+                                <h3>The Catcher in the Rye</h3>
+                                <p>by J.D. Salinger</p>
+                                <p class="due-date">Due: Sep 15, 2024</p>
+                            </div>
+                            <div class="borrowed-book-actions">
+                                <a href="#" class="btn btn-primary btn-small">Renew</a>
+                                <a href="#" class="btn btn-secondary btn-small">Return</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="suggestions">
+                    <h3>Suggested for You</h3>
+                    <div class="suggestions-carousel">
+                        <div class="carousel-book">
+                            <div class="carousel-book-cover">
+                                <img src="images/Atomic Habits.png" alt="Atomic Habits">
+                            </div>
+                            <h4>Atomic Habits</h4>
+                            <p>James Clear</p>
+                            <a href="#" class="btn btn-primary btn-small">Borrow</a>
+                        </div>
+                        <div class="carousel-book">
+                            <div class="carousel-book-cover">
+                                <img src="images/Sapiens.png" alt="Sapiens">
+                            </div>
+                            <h4>Sapiens</h4>
+                            <p>Yuval Noah Harari</p>
+                            <a href="#" class="btn btn-primary btn-small">Borrow</a>
+                        </div>
+                        <div class="carousel-book">
+                            <div class="carousel-book-cover">
+                                <img src="images/The Midnight Library.png" alt="The Midnight Library">
+                            </div>
+                            <h4>The Midnight Library</h4>
+                            <p>Matt Haig</p>
+                            <a href="#" class="btn btn-primary btn-small">Borrow</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Borrowed Books Section -->
+            <section id="borrowed" class="dashboard-section">
+                <div class="section-header">
+                    <h1>My Borrowed Books</h1>
+                    <p>Manage your current book loans</p>
+                </div>
+                
+                <div class="borrowed-books-list">
+                    <div class="borrowed-book">
+                        <div class="borrowed-book-cover-image">
+                            <img src="images/The Great Gatsby.png" alt="The Great Gatsby">
+                        </div>
+                        <div class="borrowed-book-info">
+                            <h3>The Great Gatsby</h3>
+                            <p>by F. Scott Fitzgerald</p>
+                            <p class="due-date overdue">Due: Aug 30, 2024</p>
+                        </div>
+                        <div class="borrowed-book-actions">
+                            <a href="#" class="btn btn-primary btn-small">Renew</a>
+                            <a href="#" class="btn btn-secondary btn-small">Return</a>
+                        </div>
+                    </div>
+                    <div class="borrowed-book">
+                        <div class="borrowed-book-cover-image">
+                            <img src="images/To Kill a Mockingbird.png" alt="To Kill a Mockingbird">
+                        </div>
+                        <div class="borrowed-book-info">
+                            <h3>To Kill a Mockingbird</h3>
+                            <p>by Harper Lee</p>
+                            <p class="due-date due-soon">Due: Sep 10, 2024</p>
+                        </div>
+                        <div class="borrowed-book-actions">
+                            <a href="#" class="btn btn-primary btn-small">Renew</a>
+                            <a href="#" class="btn btn-secondary btn-small">Return</a>
+                        </div>
+                    </div>
+                    <div class="borrowed-book">
+                        <div class="borrowed-book-cover-image">
+                            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1398034300/5107.jpg" alt="The Catcher in the Rye">
+                        </div>
+                        <div class="borrowed-book-info">
+                            <h3>The Catcher in the Rye</h3>
+                            <p>by J.D. Salinger</p>
+                            <p class="due-date">Due: Sep 15, 2024</p>
+                        </div>
+                        <div class="borrowed-book-actions">
+                            <a href="#" class="btn btn-primary btn-small">Renew</a>
+                            <a href="#" class="btn btn-secondary btn-small">Return</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Browse Books Section -->
+            <section id="browse" class="dashboard-section">
+                <div class="section-header">
+                    <h1>Browse Books</h1>
+                    <p>Discover our collection</p>
+                </div>
+                
+                <div class="search-filters">
+                    <input type="text" placeholder="Search books..." class="search-input">
+                    <select class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="fiction">Fiction</option>
+                        <option value="non-fiction">Non-Fiction</option>
+                        <option value="science">Science</option>
+                        <option value="history">History</option>
+                        <option value="biography">Biography</option>
+                    </select>
+                </div>
+                
+                <div class="books-grid">
+                    <div class="book-card">
+                        <div class="book-cover-image">
+                            <img src="images/1984.png" alt="1984">
+                        </div>
+                        <div class="book-info">
+                            <h3>1984</h3>
+                            <p class="book-author">by George Orwell</p>
+                            <div class="book-status status-available">
+                                <i class="fas fa-check-circle"></i>
+                                Available
+                            </div>
+                            <div class="book-actions">
+                                <a href="#" class="btn btn-primary btn-small">Details</a>
+                                <a href="#" class="btn btn-secondary btn-small">Borrow</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-cover-image">
+                            <img src="images/Pride and Prejudice.png" alt="Pride and Prejudice">
+                        </div>
+                        <div class="book-info">
+                            <h3>Pride and Prejudice</h3>
+                            <p class="book-author">by Jane Austen</p>
+                            <div class="book-status status-available">
+                                <i class="fas fa-check-circle"></i>
+                                Available
+                            </div>
+                            <div class="book-actions">
+                                <a href="#" class="btn btn-primary btn-small">Details</a>
+                                <a href="#" class="btn btn-secondary btn-small">Borrow</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-cover-image">
+                            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327869409/7624.jpg" alt="Lord of the Flies">
+                        </div>
+                        <div class="book-info">
+                            <h3>Lord of the Flies</h3>
+                            <p class="book-author">by William Golding</p>
+                            <div class="book-status status-available">
+                                <i class="fas fa-check-circle"></i>
+                                Available
+                            </div>
+                            <div class="book-actions">
+                                <a href="#" class="btn btn-primary btn-small">Details</a>
+                                <a href="#" class="btn btn-secondary btn-small">Borrow</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-cover-image">
+                            <img src="images/Atomic Habits.png" alt="Atomic Habits">
+                        </div>
+                        <div class="book-info">
+                            <h3>Atomic Habits</h3>
+                            <p class="book-author">by James Clear</p>
+                            <div class="book-status status-available">
+                                <i class="fas fa-check-circle"></i>
+                                Available
+                            </div>
+                            <div class="book-actions">
+                                <a href="#" class="btn btn-primary btn-small">Details</a>
+                                <a href="#" class="btn btn-secondary btn-small">Borrow</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-cover-image">
+                            <img src="images/Sapiens.png" alt="Sapiens">
+                        </div>
+                        <div class="book-info">
+                            <h3>Sapiens</h3>
+                            <p class="book-author">by Yuval Noah Harari</p>
+                            <div class="book-status status-available">
+                                <i class="fas fa-check-circle"></i>
+                                Available
+                            </div>
+                            <div class="book-actions">
+                                <a href="#" class="btn btn-primary btn-small">Details</a>
+                                <a href="#" class="btn btn-secondary btn-small">Borrow</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-cover-image">
+                            <img src="images/Educated.png" alt="Educated">
+                        </div>
+                        <div class="book-info">
+                            <h3>Educated</h3>
+                            <p class="book-author">by Tara Westover</p>
+                            <div class="book-status status-available">
+                                <i class="fas fa-check-circle"></i>
+                                Available
+                            </div>
+                            <div class="book-actions">
+                                <a href="#" class="btn btn-primary btn-small">Details</a>
+                                <a href="#" class="btn btn-secondary btn-small">Borrow</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Favorites Section -->
+            <section id="favorites" class="dashboard-section">
+                <div class="section-header">
+                    <h1>My Favorites</h1>
+                    <p>Books you've marked as favorites</p>
+                </div>
+                
+                <div class="books-grid">
+                    <div class="book-card">
+                        <div class="book-cover-image">
+                            <img src="images/1984.png" alt="1984">
+                        </div>
+                        <div class="book-info">
+                            <h3>1984</h3>
+                            <p class="book-author">by George Orwell</p>
+                            <div class="book-status status-available">
+                                <i class="fas fa-check-circle"></i>
+                                Available
+                            </div>
+                            <div class="book-actions">
+                                <a href="#" class="btn btn-primary btn-small">Details</a>
+                                <a href="#" class="btn btn-secondary btn-small">Borrow</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-cover-image">
+                            <img src="images/Pride and Prejudice.png" alt="Pride and Prejudice">
+                        </div>
+                        <div class="book-info">
+                            <h3>Pride and Prejudice</h3>
+                            <p class="book-author">by Jane Austen</p>
+                            <div class="book-status status-available">
+                                <i class="fas fa-check-circle"></i>
+                                Available
+                            </div>
+                            <div class="book-actions">
+                                <a href="#" class="btn btn-primary btn-small">Details</a>
+                                <a href="#" class="btn btn-secondary btn-small">Borrow</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book-card">
+                        <div class="book-cover-image">
+                            <img src="https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1327869409/7624.jpg" alt="Lord of the Flies">
+                        </div>
+                        <div class="book-info">
+                            <h3>Lord of the Flies</h3>
+                            <p class="book-author">by William Golding</p>
+                            <div class="book-status status-available">
+                                <i class="fas fa-check-circle"></i>
+                                Available
+                            </div>
+                            <div class="book-actions">
+                                <a href="#" class="btn btn-primary btn-small">Details</a>
+                                <a href="#" class="btn btn-secondary btn-small">Borrow</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Reading Progress Section -->
+            <section id="reading-progress" class="dashboard-section">
+                <div class="section-header">
+                    <h1>Reading Progress</h1>
+                    <p>Track your reading goals and achievements</p>
+                </div>
+                
+                <div class="progress-overview">
+                    <div class="progress-card">
+                        <div class="progress-header">
+                            <h3>Monthly Goal</h3>
+                            <span class="progress-percentage">75%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 75%"></div>
+                        </div>
+                        <p>3 of 4 books completed this month</p>
+                    </div>
+                    
+                    <div class="progress-card">
+                        <div class="progress-header">
+                            <h3>Reading Streak</h3>
+                            <span class="streak-count">12 days</span>
+                        </div>
+                        <div class="streak-calendar">
+                            <div class="streak-day active"></div>
+                            <div class="streak-day active"></div>
+                            <div class="streak-day active"></div>
+                            <div class="streak-day active"></div>
+                            <div class="streak-day active"></div>
+                            <div class="streak-day active"></div>
+                            <div class="streak-day active"></div>
+                        </div>
+                        <p>Keep it up! You're on fire 🔥</p>
+                    </div>
+                    
+                    <div class="progress-card">
+                        <div class="progress-header">
+                            <h3>Pages Read</h3>
+                            <span class="pages-count">1,247</span>
+                        </div>
+                        <div class="pages-chart">
+                            <div class="chart-bar" style="height: 60%"></div>
+                            <div class="chart-bar" style="height: 80%"></div>
+                            <div class="chart-bar" style="height: 45%"></div>
+                            <div class="chart-bar" style="height: 90%"></div>
+                            <div class="chart-bar" style="height: 75%"></div>
+                        </div>
+                        <p>This month's reading activity</p>
+                    </div>
+                </div>
+                
+                <div class="currently-reading">
+                    <h3>Currently Reading</h3>
+                    <div class="reading-book">
+                        <div class="reading-book-cover">
+                            <img src="images/The Great Gatsby.png" alt="The Great Gatsby">
+                        </div>
+                        <div class="reading-info">
+                            <h4>The Great Gatsby</h4>
+                            <p>by F. Scott Fitzgerald</p>
+                            <div class="reading-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%"></div>
+                                </div>
+                                <span>Page 123 of 180 (65%)</span>
+                            </div>
+                            <p class="reading-time">Estimated 2 hours remaining</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section id="history" class="dashboard-section">
+                <div class="section-header">
+                    <h1>Reading History</h1>
+                    <p>Books you've read in the past</p>
+                </div>
+                
+                <div class="history-timeline" id="historyTimeline">
+                    <!-- History will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Recommendations Section -->
+            <section id="recommendations" class="dashboard-section">
+                <div class="section-header">
+                    <h1>Personalized Recommendations</h1>
+                    <p>Books curated just for you based on your reading history</p>
+                </div>
+                
+                <div class="recommendation-categories">
+                    <div class="recommendation-category">
+                        <h3>Because you read "Atomic Habits"</h3>
+                        <div class="recommendation-books">
+                            <div class="recommendation-book">
+                                <div class="book-cover">
+                                    <img src="images/The 7 Habits.png" alt="The 7 Habits of Highly Effective People">
+                                </div>
+                                <h4>The 7 Habits of Highly Effective People</h4>
+                                <p>Stephen R. Covey</p>
+                                <div class="book-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8</span>
+                                </div>
+                                <button class="btn btn-primary btn-small">Add to List</button>
+                            </div>
+                            <div class="recommendation-book">
+                                <div class="book-cover">
+                                    <img src="images/Mindset.png" alt="Mindset">
+                                </div>
+                                <h4>Mindset</h4>
+                                <p>Carol S. Dweck</p>
+                                <div class="book-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span>4.2</span>
+                                </div>
+                                <button class="btn btn-primary btn-small">Add to List</button>
+                            </div>
+                            <div class="recommendation-book">
+                                <div class="book-cover">
+                                    <img src="images/The Silent Patient.png" alt="The Silent Patient">
+                                </div>
+                                <h4>The Silent Patient</h4>
+                                <p>Alex Michaelides</p>
+                                <div class="book-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span>4.3</span>
+                                </div>
+                                <button class="btn btn-primary btn-small">Add to List</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="recommendation-category">
+                        <h3>Trending in Fiction</h3>
+                        <div class="recommendation-books">
+                            <div class="recommendation-book">
+                                <div class="book-cover">
+                                    <img src="images/Where the Crawdads Sing.png" alt="Where the Crawdads Sing">
+                                </div>
+                                <h4>Where the Crawdads Sing</h4>
+                                <p>Delia Owens</p>
+                                <div class="book-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <span>4.6</span>
+                                </div>
+                                <button class="btn btn-primary btn-small">Add to List</button>
+                            </div>
+                            <div class="recommendation-book">
+                                <div class="book-cover">
+                                    <img src="images/The Silent Patient.png" alt="The Silent Patient">
+                                </div>
+                                <h4>The Silent Patient</h4>
+                                <p>Alex Michaelides</p>
+                                <div class="book-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                    <span>4.3</span>
+                                </div>
+                                <button class="btn btn-primary btn-small">Add to List</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements Section -->
+            <section id="achievements" class="dashboard-section">
+                <div class="section-header">
+                    <h1>Achievements</h1>
+                    <p>Your reading milestones and badges</p>
+                </div>
+                
+                <div class="achievement-progress">
+                    <div class="achievement-level">
+                        <h3>Reading Level: <span class="level-badge">Bookworm</span></h3>
+                        <div class="level-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                            <span>6 books away from "Scholar" level</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="achievements-grid">
+                    <div class="achievement-card earned">
+                        <div class="achievement-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>First Book</h3>
+                        <p>Read your first book</p>
+                        <div class="achievement-date">Earned: Jan 15, 2024</div>
+                    </div>
+                    
+                    <div class="achievement-card earned">
+                        <div class="achievement-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <h3>Reading Streak</h3>
+                        <p>Read for 7 consecutive days</p>
+                        <div class="achievement-date">Earned: Feb 1, 2024</div>
+                    </div>
+                    
+                    <div class="achievement-card">
+                        <div class="achievement-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3>Bookworm</h3>
+                        <p>Read 50 books</p>
+                        <div class="achievement-progress">24/50 books</div>
+                    </div>
+                    
+                    <div class="achievement-card">
+                        <div class="achievement-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3>Reviewer</h3>
+                        <p>Write 25 book reviews</p>
+                        <div class="achievement-progress">8/25 reviews</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notifications Section -->
+            <section id="notifications" class="dashboard-section">
+                <div class="section-header">
+                    <h1>Notifications</h1>
+                    <p>Stay updated with your library activities</p>
+                </div>
+                
+                <div class="notifications-list">
+                    <!-- Notifications will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- JavaScript Modules -->
+    <script src="js/auth.js"></script>
+    <script src="js/books.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/animations.js"></script>
+    <script>
+        // Additional dashboard enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add notification system styles
+            const notificationStyles = document.createElement('style');
+            notificationStyles.textContent = `
+                .notification {
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: white;
+                    border-radius: 8px;
+                    padding: 15px 20px;
+                    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    z-index: 1000;
+                    animation: slideInRight 0.3s ease;
+                    max-width: 400px;
+                }
+                
+                .notification-success {
+                    border-left: 4px solid #10b981;
+                }
+                
+                .notification-error {
+                    border-left: 4px solid #ef4444;
+                }
+                
+                .notification-info {
+                    border-left: 4px solid #3b82f6;
+                }
+                
+                .notification-close {
+                    background: none;
+                    border: none;
+                    font-size: 18px;
+                    cursor: pointer;
+                    color: #666;
+                    margin-left: auto;
+                }
+                
+                @keyframes slideInRight {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                
+                .book-overlay {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background: rgba(0,0,0,0.8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    border-radius: 8px;
+                }
+                
+                .btn-favorite {
+                    background: rgba(255,255,255,0.9);
+                    border: none;
+                    border-radius: 50%;
+                    width: 40px;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+                
+                .btn-favorite:hover {
+                    background: white;
+                    transform: scale(1.1);
+                }
+                
+                .btn-favorite i {
+                    color: #ef4444;
+                    font-size: 1.2rem;
+                }
+                
+                @keyframes pulse {
+                    0%, 100% { opacity: 1; }
+                    50% { opacity: 0.7; }
+                }
+                
+                @keyframes fadeInScale {
+                    0% {
+                        opacity: 0;
+                        transform: scale(0.8);
+                    }
+                    100% {
+                        opacity: 1;
+                        transform: scale(1);
+                    }
+                }
+                
+                .dashboard-section {
+                    transition: all 0.4s ease;
+                }
+            `;
+            document.head.appendChild(notificationStyles);
+
+            // Add hover effects to book covers
+            document.addEventListener('mouseover', function(e) {
+                if (e.target.closest('.book-cover-image, .carousel-book-cover, .borrowed-book-cover-image')) {
+                    const cover = e.target.closest('.book-cover-image, .carousel-book-cover, .borrowed-book-cover-image');
+                    cover.style.transform = 'scale(1.05) rotate(2deg)';
+                    cover.style.boxShadow = '0 15px 35px rgba(102, 126, 234, 0.3)';
+                    cover.style.transition = 'all 0.3s ease';
+                }
+            });
+            
+            document.addEventListener('mouseout', function(e) {
+                if (e.target.closest('.book-cover-image, .carousel-book-cover, .borrowed-book-cover-image')) {
+                    const cover = e.target.closest('.book-cover-image, .carousel-book-cover, .borrowed-book-cover-image');
+                    cover.style.transform = 'scale(1) rotate(0deg)';
+                    cover.style.boxShadow = '';
+                }
+            });
+
+            // Global event handlers for book actions
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.btn-borrow')) {
+                    e.preventDefault();
+                    const bookCard = e.target.closest('[data-book-id]');
+                    if (bookCard && typeof borrowBook === 'function') {
+                        borrowBook(bookCard);
+                    }
+                }
+                
+                if (e.target.closest('.btn-return')) {
+                    e.preventDefault();
+                    const bookCard = e.target.closest('[data-book-id]');
+                    if (bookCard && typeof returnBook === 'function') {
+                        returnBook(bookCard);
+                    }
+                }
+                
+                if (e.target.closest('.btn-renew')) {
+                    e.preventDefault();
+                    const bookCard = e.target.closest('[data-book-id]');
+                    if (bookCard && typeof renewBook === 'function') {
+                        renewBook(bookCard);
+                    }
+                }
+                
+                if (e.target.closest('.btn-favorite')) {
+                    e.preventDefault();
+                    const bookCard = e.target.closest('[data-book-id]');
+                    if (bookCard && typeof toggleFavorite === 'function') {
+                        toggleFavorite(bookCard);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

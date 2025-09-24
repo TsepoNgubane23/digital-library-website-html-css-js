@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - DigiLibrary</title>
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard-style.css">
+    <link rel="stylesheet" href="auth-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .admin-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .admin-stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .admin-stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .admin-stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #3b82f6;
+        }
+
+        .admin-stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .admin-section {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .admin-section-header {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .admin-section-content {
+            padding: 1.5rem;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .users-table th {
+            background: #f8fafc;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .user-avatar-small {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .membership-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .membership-premium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .membership-standard {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+        }
+
+        .add-user-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group-inline {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group-inline label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .form-group-inline input,
+        .form-group-inline select {
+            padding: 0.75rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 0.875rem;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .books-management {
+            margin-top: 2rem;
+        }
+
+        .books-grid-admin {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .book-card-admin {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .book-cover-admin {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+        }
+
+        .availability-toggle {
+            margin-top: 0.5rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: #3b82f6;
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar dashboard-nav">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-book-open"></i>
+                <span>DigiLibrary Admin</span>
+            </div>
+            <div class="user-menu">
+                <div class="user-info">
+                    <i class="fas fa-user-shield" style="font-size: 1.5rem; color: #3b82f6;"></i>
+                    <span class="user-name">Administrator</span>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-btn">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Content -->
+    <div class="dashboard-container">
+        <main class="main-content" style="margin-left: 0; width: 100%;">
+            <!-- Admin Header -->
+            <div class="admin-header">
+                <h1><i class="fas fa-cog"></i> Admin Panel</h1>
+                <p>Manage users, books, and system settings</p>
+            </div>
+
+            <!-- Admin Stats -->
+            <div class="admin-stats">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="admin-stat-number" id="totalUsers">0</div>
+                    <div class="admin-stat-label">Total Users</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="admin-stat-number" id="totalBooks">0</div>
+                    <div class="admin-stat-label">Total Books</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon">
+                        <i class="fas fa-bookmark"></i>
+                    </div>
+                    <div class="admin-stat-number" id="borrowedBooks">0</div>
+                    <div class="admin-stat-label">Borrowed Books</div>
+                </div>
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="admin-stat-number" id="overdueBooks">0</div>
+                    <div class="admin-stat-label">Overdue Books</div>
+                </div>
+            </div>
+
+            <!-- User Management Section -->
+            <div class="admin-section">
+                <div class="admin-section-header">
+                    <h2 class="admin-section-title">User Management</h2>
+                    <button class="btn btn-primary" onclick="showAddUserForm()">
+                        <i class="fas fa-plus"></i> Add User
+                    </button>
+                </div>
+                <div class="admin-section-content">
+                    <!-- Add User Form -->
+                    <div id="addUserForm" style="display: none; margin-bottom: 2rem; padding: 1.5rem; background: #f8fafc; border-radius: 8px;">
+                        <h3>Add New User</h3>
+                        <form class="add-user-form" onsubmit="addUser(event)">
+                            <div class="form-group-inline">
+                                <label>First Name</label>
+                                <input type="text" name="firstName" required>
+                            </div>
+                            <div class="form-group-inline">
+                                <label>Last Name</label>
+                                <input type="text" name="lastName" required>
+                            </div>
+                            <div class="form-group-inline">
+                                <label>Email</label>
+                                <input type="email" name="email" required>
+                            </div>
+                            <div class="form-group-inline">
+                                <label>Phone</label>
+                                <input type="tel" name="phone" required>
+                            </div>
+                            <div class="form-group-inline">
+                                <label>Password</label>
+                                <input type="password" name="password" required>
+                            </div>
+                            <div class="form-group-inline">
+                                <label>Membership Type</label>
+                                <select name="membershipType">
+                                    <option value="Standard">Standard</option>
+                                    <option value="Premium">Premium</option>
+                                </select>
+                            </div>
+                            <div class="form-group-inline" style="display: flex; align-items: end; gap: 1rem;">
+                                <button type="submit" class="btn btn-primary">Add User</button>
+                                <button type="button" class="btn btn-secondary" onclick="hideAddUserForm()">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Users Table -->
+                    <div style="overflow-x: auto;">
+                        <table class="users-table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Join Date</th>
+                                    <th>Membership</th>
+                                    <th>Books Borrowed</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <!-- Users will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Book Management Section -->
+            <div class="admin-section">
+                <div class="admin-section-header">
+                    <h2 class="admin-section-title">Book Management</h2>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Add Book
+                    </button>
+                </div>
+                <div class="admin-section-content">
+                    <div class="books-grid-admin" id="booksGridAdmin">
+                        <!-- Books will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <h3 id="confirmTitle">Confirm Action</h3>
+            <p id="confirmMessage">Are you sure you want to perform this action?</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 1.5rem;">
+                <button class="btn btn-danger" id="confirmYes">Yes</button>
+                <button class="btn btn-secondary" id="confirmNo">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/auth.js"></script>
+    <script src="js/books.js"></script>
+    <script src="js/animations.js"></script>
+    <script>
+        class AdminManager {
+            constructor() {
+                this.init();
+            }
+
+            init() {
+                this.loadAdminData();
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                // Dropdown functionality
+                const dropdownBtn = document.querySelector('.dropdown-btn');
+                const dropdownMenu = document.querySelector('.dropdown-menu');
+                
+                if (dropdownBtn && dropdownMenu) {
+                    dropdownBtn.addEventListener('click', () => {
+                        dropdownMenu.classList.toggle('show');
+                    });
+
+                    document.addEventListener('click', (e) => {
+                        if (!e.target.closest('.dropdown')) {
+                            dropdownMenu.classList.remove('show');
+                        }
+                    });
+                }
+
+                // Modal functionality
+                document.getElementById('confirmNo').addEventListener('click', () => {
+                    this.hideModal();
+                });
+            }
+
+            loadAdminData() {
+                this.loadStats();
+                this.loadUsers();
+                this.loadBooks();
+            }
+
+            loadStats() {
+                const users = authManager.getAllUsers();
+                const books = bookManager.getAllBooks();
+                
+                let totalBorrowed = 0;
+                let totalOverdue = 0;
+                
+                users.forEach(user => {
+                    totalBorrowed += user.borrowedBooks.length;
+                    totalOverdue += user.borrowedBooks.filter(book => 
+                        new Date(book.dueDate) < new Date() && book.status !== 'returned'
+                    ).length;
+                });
+
+                document.getElementById('totalUsers').textContent = users.length;
+                document.getElementById('totalBooks').textContent = books.length;
+                document.getElementById('borrowedBooks').textContent = totalBorrowed;
+                document.getElementById('overdueBooks').textContent = totalOverdue;
+            }
+
+            loadUsers() {
+                const users = authManager.getAllUsers();
+                const tbody = document.getElementById('usersTableBody');
+                
+                tbody.innerHTML = users.map(user => `
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <img src="${user.avatar}" alt="${user.name}" class="user-avatar-small">
+                                <span>${user.name}</span>
+                            </div>
+                        </td>
+                        <td>${user.email}</td>
+                        <td>${this.formatDate(user.joinDate)}</td>
+                        <td>
+                            <span class="membership-badge membership-${user.membershipType.toLowerCase()}">
+                                ${user.membershipType}
+                            </span>
+                        </td>
+                        <td>${user.borrowedBooks.length}</td>
+                        <td>
+                            <span style="color: ${user.borrowedBooks.some(b => new Date(b.dueDate) < new Date()) ? '#ef4444' : '#10b981'};">
+                                ${user.borrowedBooks.some(b => new Date(b.dueDate) < new Date()) ? 'Has Overdue' : 'Active'}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-primary btn-small" onclick="editUser('${user.email}')">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-danger btn-small" onclick="deleteUser('${user.email}')">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            loadBooks() {
+                const books = bookManager.getAllBooks();
+                const container = document.getElementById('booksGridAdmin');
+                
+                container.innerHTML = books.map(book => `
+                    <div class="book-card-admin">
+                        <img src="${book.cover}" alt="${book.title}" class="book-cover-admin">
+                        <h4 style="font-size: 0.9rem; margin: 0.5rem 0;">${book.title}</h4>
+                        <p style="font-size: 0.8rem; color: #666; margin: 0;">${book.author}</p>
+                        <p style="font-size: 0.8rem; margin: 0.5rem 0;">
+                            ${book.availableCopies}/${book.totalCopies} available
+                        </p>
+                        <div class="availability-toggle">
+                            <label class="toggle-switch">
+                                <input type="checkbox" ${book.available ? 'checked' : ''} 
+                                       onchange="toggleBookAvailability('${book.id}', this.checked)">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            formatDate(dateString) {
+                return new Date(dateString).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric'
+                });
+            }
+
+            showModal(title, message, onConfirm) {
+                document.getElementById('confirmTitle').textContent = title;
+                document.getElementById('confirmMessage').textContent = message;
+                document.getElementById('confirmModal').classList.add('show');
+                
+                document.getElementById('confirmYes').onclick = () => {
+                    onConfirm();
+                    this.hideModal();
+                };
+            }
+
+            hideModal() {
+                document.getElementById('confirmModal').classList.remove('show');
+            }
+
+            showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.innerHTML = `
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : 
+                                   type === 'error' ? 'fa-exclamation-circle' : 
+                                   'fa-info-circle'}"></i>
+                    <span>${message}</span>
+                    <button class="notification-close">&times;</button>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 5000);
+                
+                notification.querySelector('.notification-close').addEventListener('click', () => {
+                    notification.remove();
+                });
+            }
+        }
+
+        // Global functions for HTML onclick handlers
+        function showAddUserForm() {
+            document.getElementById('addUserForm').style.display = 'block';
+        }
+
+        function hideAddUserForm() {
+            document.getElementById('addUserForm').style.display = 'none';
+        }
+
+        function addUser(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const userData = {
+                firstName: formData.get('firstName'),
+                lastName: formData.get('lastName'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                password: formData.get('password'),
+                membershipType: formData.get('membershipType')
+            };
+
+            const result = authManager.register(userData);
+            if (result.success) {
+                if (typeof adminManager !== 'undefined') {
+                    adminManager.showNotification('User added successfully!', 'success');
+                    adminManager.loadAdminData();
+                } else {
+                    showNotification('User added successfully!', 'success');
+                }
+                hideAddUserForm();
+                event.target.reset();
+            } else {
+                if (typeof adminManager !== 'undefined') {
+                    adminManager.showNotification(result.message, 'error');
+                } else {
+                    showNotification(result.message, 'error');
+                }
+            }
+        }
+
+        function deleteUser(email) {
+            if (confirm('Are you sure you want to delete this user? This action cannot be undone.')) {
+                const result = authManager.deleteUser(email);
+                if (result) {
+                    if (typeof adminManager !== 'undefined') {
+                        adminManager.showNotification('User deleted successfully!', 'success');
+                        adminManager.loadAdminData();
+                    } else {
+                        showNotification('User deleted successfully!', 'success');
+                        location.reload();
+                    }
+                } else {
+                    if (typeof adminManager !== 'undefined') {
+                        adminManager.showNotification('Failed to delete user', 'error');
+                    } else {
+                        showNotification('Failed to delete user', 'error');
+                    }
+                }
+            }
+        }
+
+        function editUser(email) {
+            if (typeof adminManager !== 'undefined') {
+                adminManager.showNotification('Edit user functionality coming soon!', 'info');
+            } else {
+                showNotification('Edit user functionality coming soon!', 'info');
+            }
+        }
+
+        function toggleBookAvailability(bookId, available) {
+            if (typeof bookManager !== 'undefined') {
+                bookManager.updateBookAvailability(bookId, available);
+            }
+            if (typeof adminManager !== 'undefined') {
+                adminManager.showNotification(
+                    `Book ${available ? 'made available' : 'marked unavailable'}`, 
+                    'success'
+                );
+                adminManager.loadStats();
+            } else {
+                showNotification(
+                    `Book ${available ? 'made available' : 'marked unavailable'}`, 
+                    'success'
+                );
+            }
+        }
+
+        // Fallback notification function
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.innerHTML = `
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
+                <span>${message}</span>
+                <button class="notification-close">&times;</button>
+            `;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: white;
+                border-radius: 8px;
+                padding: 15px 20px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                z-index: 1000;
+                animation: slideInRight 0.3s ease;
+                max-width: 400px;
+                border-left: 4px solid ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 5000);
+            
+            notification.querySelector('.notification-close').addEventListener('click', () => {
+                notification.remove();
+            });
+        }
+
+        // Initialize admin manager
+        const adminManager = new AdminManager();
+    </script>
+</body>
+</html>
