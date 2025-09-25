@@ -6,20 +6,17 @@ class DashboardManager {
         this.init();
     }
 
-    // Initialize dashboard
     init() {
         if (!this.currentUser) {
             window.location.href = 'login.html';
             return;
         }
-
         this.setupNavigation();
         this.loadUserData();
         this.setupEventListeners();
         this.loadDashboardData();
     }
 
-    // Setup sidebar navigation
     setupNavigation() {
         const menuItems = document.querySelectorAll('.menu-item');
         const sections = document.querySelectorAll('.dashboard-section');
@@ -29,11 +26,9 @@ class DashboardManager {
                 e.preventDefault();
                 const targetSection = item.getAttribute('href').substring(1);
                 
-                // Update active menu item
                 menuItems.forEach(mi => mi.classList.remove('active'));
                 item.classList.add('active');
                 
-                // Show target section
                 sections.forEach(section => {
                     section.classList.remove('active');
                     if (section.id === targetSection) {
@@ -46,162 +41,87 @@ class DashboardManager {
         });
     }
 
-    // Load user data into UI
     loadUserData() {
-        const userData = authManager.getUserData(this.currentUser.email);
-        if (!userData) return;
-
-        // Update user name displays
-        document.getElementById('userName').textContent = userData.name;
-        document.getElementById('welcomeName').textContent = userData.name;
+        const userNameElement = document.querySelector('.user-name');
+        const userEmailElement = document.querySelector('.user-email');
         
-        // Update user avatar
-        const avatarImg = document.querySelector('.user-avatar');
-        if (avatarImg) {
-            avatarImg.src = userData.avatar;
-            avatarImg.alt = userData.name;
+        if (userNameElement) {
+            userNameElement.textContent = this.currentUser.name || this.currentUser.email;
+        }
+        if (userEmailElement) {
+            userEmailElement.textContent = this.currentUser.email;
         }
     }
 
-    // Setup event listeners
     setupEventListeners() {
-        // Dropdown menu
-        const dropdownBtn = document.querySelector('.dropdown-btn');
-        const dropdownMenu = document.querySelector('.dropdown-menu');
-        
-        if (dropdownBtn && dropdownMenu) {
-            dropdownBtn.addEventListener('click', () => {
-                dropdownMenu.classList.toggle('show');
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!e.target.closest('.dropdown')) {
-                    dropdownMenu.classList.remove('show');
-                }
-            });
-        }
-
-        // Logout functionality
-        const logoutLink = document.querySelector('a[href="index.html"]');
-        if (logoutLink) {
-            logoutLink.addEventListener('click', (e) => {
-                e.preventDefault();
+        const logoutBtn = document.getElementById('logout-btn');
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
                 authManager.logout();
+                window.location.href = 'login.html';
             });
         }
 
-        // Book action buttons
-        this.setupBookActions();
-        
-        // Search functionality
-        this.setupSearch();
-    }
-
-    // Setup book action buttons
-    setupBookActions() {
         document.addEventListener('click', (e) => {
             if (e.target.matches('.btn-borrow') || e.target.closest('.btn-borrow')) {
                 e.preventDefault();
-                const bookCard = e.target.closest('.book-card') || e.target.closest('.carousel-book');
-                if (bookCard) {
-                    this.borrowBook(bookCard);
-                }
+                const bookCard = e.target.closest('.book-card');
+                if (bookCard) this.borrowBook(bookCard);
             }
-
             if (e.target.matches('.btn-return') || e.target.closest('.btn-return')) {
                 e.preventDefault();
                 const bookCard = e.target.closest('.borrowed-book');
-                if (bookCard) {
-                    this.returnBook(bookCard);
-                }
+                if (bookCard) this.returnBook(bookCard);
             }
-
             if (e.target.matches('.btn-renew') || e.target.closest('.btn-renew')) {
                 e.preventDefault();
                 const bookCard = e.target.closest('.borrowed-book');
-                if (bookCard) {
-                    this.renewBook(bookCard);
-                }
+                if (bookCard) this.renewBook(bookCard);
             }
-
             if (e.target.matches('.btn-favorite') || e.target.closest('.btn-favorite')) {
                 e.preventDefault();
                 const bookCard = e.target.closest('.book-card');
-                if (bookCard) {
-                    this.toggleFavorite(bookCard);
-                }
+                if (bookCard) this.toggleFavorite(bookCard);
             }
         });
     }
 
-    // Setup search functionality
-    setupSearch() {
-        const searchInput = document.querySelector('.search-input');
-        const filterSelect = document.querySelector('.filter-select');
-
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                this.performSearch(e.target.value, this.getFilters());
-            });
-        }
-
-        if (filterSelect) {
-            filterSelect.addEventListener('change', (e) => {
-                this.performSearch(searchInput?.value || '', this.getFilters());
-            });
-        }
-    }
-
-    // Get current filters
-    getFilters() {
-        const filterSelect = document.querySelector('.filter-select');
-        return {
-            category: filterSelect?.value || ''
-        };
-    }
-
-    // Perform search
-    performSearch(query, filters) {
-        const results = bookManager.searchBooks(query, filters);
-        this.displaySearchResults(results);
-    }
-
-    // Display search results
-    displaySearchResults(books) {
-        const booksGrid = document.querySelector('#browse .books-grid');
-        if (!booksGrid) return;
-
-        booksGrid.innerHTML = books.map(book => this.createBookCard(book)).join('');
-    }
-
-    // Load dashboard data
     loadDashboardData() {
-        this.loadOverviewData();
-        this.loadBorrowedBooks();
-        this.loadRecommendations();
+        this.loadStats();
+        this.loadSectionData(this.currentSection);
     }
 
-    // Load overview section data
-    loadOverviewData() {
-        const userData = authManager.getUserData(this.currentUser.email);
-        if (!userData) return;
+    loadSectionData(sectionId) {
+        switch(sectionId) {
+            case 'overview': this.loadOverview(); break;
+            case 'borrowed': this.loadBorrowedBooks(); break;
+            case 'browse': this.loadBrowseBooks(); break;
+            case 'favorites': this.loadFavoriteBooks(); break;
+            case 'reading-progress': this.loadReadingProgress(); break;
+            case 'history': this.loadReadingHistory(); break;
+            case 'notifications': this.loadNotifications(); break;
+            case 'achievements': this.loadAchievements(); break;
+            case 'recommendations': this.loadRecommendations(); break;
+            case 'community': this.loadCommunity(); break;
+        }
+    }
 
-        // Update stats
-        const stats = {
-            borrowed: userData.borrowedBooks.length,
-            overdue: userData.borrowedBooks.filter(book => 
-                new Date(book.dueDate) < new Date() && book.status !== 'returned'
-            ).length,
-            favorites: userData.favorites.length,
-            totalRead: userData.readingHistory.length
-        };
+    loadOverview() {
+        this.loadBorrowedBooks();
+        this.loadCurrentlyReading();
+    }
 
+    loadStats() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) return;
+
+        const userData = authManager.getUserData(currentUser.email);
+        const stats = authManager.getUserStats(currentUser.email);
+        
         this.updateStatCards(stats);
         this.updateReadingProgress(userData);
     }
 
-    // Update stat cards
     updateStatCards(stats) {
         const statCards = document.querySelectorAll('.stat-card');
         if (statCards.length >= 4) {
@@ -212,69 +132,331 @@ class DashboardManager {
         }
     }
 
-    // Update reading progress
     updateReadingProgress(userData) {
-        const monthlyProgress = (userData.readingGoals.monthly.completed / userData.readingGoals.monthly.target) * 100;
-        const progressFill = document.querySelector('.progress-fill');
-        const progressPercentage = document.querySelector('.progress-percentage');
+        const monthlyProgressFill = document.querySelector('.monthly-progress .progress-fill');
+        const monthlyProgressPercentage = document.querySelector('.monthly-progress .progress-percentage');
+        const monthlyProgressText = document.querySelector('.monthly-progress .progress-text');
         
-        if (progressFill) {
-            progressFill.style.width = `${monthlyProgress}%`;
+        if (monthlyProgressFill) {
+            monthlyProgressFill.style.width = `${userData.readingGoals.monthly.progress}%`;
         }
-        if (progressPercentage) {
-            progressPercentage.textContent = `${Math.round(monthlyProgress)}%`;
+        if (monthlyProgressPercentage) {
+            monthlyProgressPercentage.textContent = `${Math.round(userData.readingGoals.monthly.progress)}%`;
         }
-
-        // Update streak
-        const streakCount = document.querySelector('.streak-count');
-        if (streakCount) {
-            streakCount.textContent = `${userData.readingStreak} days`;
+        if (monthlyProgressText) {
+            monthlyProgressText.textContent = `${userData.readingGoals.monthly.completed}/${userData.readingGoals.monthly.target} books this month`;
         }
-
-        // Update pages read
-        const pagesCount = document.querySelector('.pages-count');
-        if (pagesCount) {
-            pagesCount.textContent = userData.totalPagesRead.toLocaleString();
+        
+        // Update yearly progress
+        const yearlyProgressFill = document.querySelector('.yearly-progress .progress-fill');
+        const yearlyProgressPercentage = document.querySelector('.yearly-progress .progress-percentage');
+        const yearlyProgressText = document.querySelector('.yearly-progress .progress-text');
+        
+        if (yearlyProgressFill) {
+            yearlyProgressFill.style.width = `${yearlyProgress}%`;
+        }
+        if (yearlyProgressPercentage) {
+            yearlyProgressPercentage.textContent = `${Math.round(yearlyProgress)}%`;
+        }
+        if (yearlyProgressText) {
+            yearlyProgressText.textContent = `${userData.readingGoals.yearly.completed}/${userData.readingGoals.yearly.target} books this year`;
+        }
+        
+        // Update reading streak
+        const streakElement = document.querySelector('.reading-streak .streak-number');
+        if (streakElement) {
+            streakElement.textContent = userData.readingStreak;
+        }
+        
+        // Update total pages read
+        const pagesElement = document.querySelector('.total-pages .pages-number');
+        if (pagesElement) {
+            pagesElement.textContent = userData.totalPagesRead.toLocaleString();
         }
     }
 
-    // Load borrowed books
-    loadBorrowedBooks() {
-        const userData = authManager.getUserData(this.currentUser.email);
-        if (!userData) return;
+    // Load reading history section
+    loadReadingHistory() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) return;
 
-        const borrowedBooksContainer = document.querySelector('.borrowed-books-list');
-        if (!borrowedBooksContainer) return;
-
-        const borrowedBooksHTML = userData.borrowedBooks.map(book => 
-            this.createBorrowedBookCard(book)
-        ).join('');
-
-        borrowedBooksContainer.innerHTML = borrowedBooksHTML || '<p>No borrowed books</p>';
+        const userData = authManager.getUserData(currentUser.email);
+        const historyContainer = document.querySelector('#history .reading-history-list');
+        
+        if (historyContainer && userData.readingHistory.length > 0) {
+            historyContainer.innerHTML = userData.readingHistory
+                .sort((a, b) => new Date(b.completedDate) - new Date(a.completedDate))
+                .map(entry => {
+                    const book = bookManager.getBook(entry.bookId);
+                    if (!book) return '';
+                    
+                    return `
+                        <div class="history-item">
+                            <div class="history-book-cover">
+                                <img src="${book.cover}" alt="${book.title}" onerror="this.src='${bookManager.getDefaultBookCover()}'">
+                            </div>
+                            <div class="history-info">
+                                <h4>${book.title}</h4>
+                                <p class="history-author">by ${book.author}</p>
+                                <p class="history-completed">Completed: ${formatDate(entry.completedDate)}</p>
+                                ${entry.pagesRead ? `<p class="history-pages">${entry.pagesRead} pages</p>` : ''}
+                                <div class="history-rating">
+                                    ${Array.from({length: 5}, (_, i) => 
+                                        `<i class="fas fa-star ${i < entry.rating ? 'rated' : ''}"></i>`
+                                    ).join('')}
+                                    <span class="rating-text">(${entry.rating}/5)</span>
+                                </div>
+                            </div>
+                            <div class="history-actions">
+                                <button class="btn btn-outline btn-small" onclick="addToFavorites('${book.id}')">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                ${book.available ? 
+                                    `<button class="btn btn-primary btn-small" onclick="borrowBook(this)" data-book-id="${book.id}">Borrow Again</button>` :
+                                    `<button class="btn btn-secondary btn-small" disabled>Unavailable</button>`
+                                }
+                            </div>
+                        </div>
+                    `;
+                }).filter(item => item).join('');
+        } else if (historyContainer) {
+            historyContainer.innerHTML = `
+                <div class="no-books-message">
+                    <i class="fas fa-history"></i>
+                    <h3>No reading history</h3>
+                    <p>Books you complete will appear here</p>
+                    <a href="#browse" class="btn btn-primary">Start Reading</a>
+                </div>
+            `;
+        }
     }
 
-    // Load recommendations
-    loadRecommendations() {
-        const userData = authManager.getUserData(this.currentUser.email);
-        if (!userData) return;
-
-        const recommendations = bookManager.getRecommendations(
-            userData.favorites,
-            userData.readingHistory,
-            6
-        );
-
-        const suggestionsCarousel = document.querySelector('.suggestions-carousel');
-        if (suggestionsCarousel) {
-            suggestionsCarousel.innerHTML = recommendations.map(book => 
-                this.createCarouselBook(book)
-            ).join('');
+    // Load notifications section
+    loadNotifications() {
+        const notificationsContainer = document.getElementById('notifications-list');
+        const user = authManager.getCurrentUser();
+        
+        if (!user || !user.notifications) {
+            notificationsContainer.innerHTML = '<p>No notifications available.</p>';
+            return;
         }
+
+        // Initialize notification filters if not already done
+        this.initializeNotificationFilters();
+
+        const notifications = user.notifications.sort((a, b) => new Date(b.date) - new Date(a.date));
+        
+        notificationsContainer.innerHTML = notifications.map(notification => `
+            <div class="notification-item notification-${notification.type}" data-id="${notification.id}" data-type="${notification.type}">
+                <div class="notification-icon">
+                    <i class="fas ${this.getNotificationIcon(notification.type)}"></i>
+                </div>
+                <div class="notification-content">
+                    <p class="notification-message">${notification.message}</p>
+                    <p class="notification-date">${this.formatDate(notification.date)}</p>
+                </div>
+                <button class="notification-dismiss" onclick="dashboardManager.dismissNotification('${notification.id}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `).join('');
+
+        // Update notification count
+        this.updateNotificationCount();
+    }
+
+    initializeNotificationFilters() {
+        // Add event listeners for notification filters
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                // Remove active class from all buttons
+                filterBtns.forEach(b => b.classList.remove('active'));
+                // Add active class to clicked button
+                e.target.classList.add('active');
+                
+                const filterType = e.target.dataset.filter;
+                this.filterNotifications(filterType);
+            });
+        });
+
+        // Add event listener for mark all as read
+        const markAllReadBtn = document.getElementById('mark-all-read');
+        if (markAllReadBtn) {
+            markAllReadBtn.addEventListener('click', () => {
+                this.markAllNotificationsAsRead();
+            });
+        }
+
+        // Add event listeners for notification settings
+        const settingCheckboxes = document.querySelectorAll('.notification-settings input[type="checkbox"]');
+        settingCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                this.updateNotificationSetting(e.target.name, e.target.checked);
+            });
+        });
+    }
+
+    filterNotifications(type) {
+        const notifications = document.querySelectorAll('.notification-item');
+        
+        notifications.forEach(notification => {
+            if (type === 'all' || notification.dataset.type === type) {
+                notification.style.display = 'flex';
+            } else {
+                notification.style.display = 'none';
+            }
+        });
+    }
+
+    markAllNotificationsAsRead() {
+        const user = authManager.getCurrentUser();
+        if (user && user.notifications) {
+            user.notifications.forEach(notification => {
+                notification.read = true;
+            });
+            authManager.updateUser(user);
+            this.loadNotifications();
+            showNotification('All notifications marked as read', 'success');
+        }
+    }
+
+    updateNotificationSetting(setting, enabled) {
+        const user = authManager.getCurrentUser();
+        if (user) {
+            if (!user.notificationSettings) {
+                user.notificationSettings = {};
+            }
+            user.notificationSettings[setting] = enabled;
+            authManager.updateUser(user);
+            showNotification(`Notification setting updated: ${setting}`, 'success');
+        }
+    }
+
+    updateNotificationCount() {
+        const user = authManager.getCurrentUser();
+        const unreadCount = user && user.notifications ? 
+            user.notifications.filter(n => !n.read).length : 0;
+        
+        const countElement = document.querySelector('.notification-count');
+        if (countElement) {
+            countElement.textContent = unreadCount;
+            countElement.style.display = unreadCount > 0 ? 'block' : 'none';
+        }
+    }
+
+    // Get notification icon based on type
+    getNotificationIcon(type) {
+        switch(type) {
+            case 'warning': return 'fa-exclamation-triangle';
+            case 'success': return 'fa-check-circle';
+            case 'info': return 'fa-info-circle';
+            case 'error': return 'fa-times-circle';
+            default: return 'fa-bell';
+        }
+    }
+
+    // Update achievements section
+    loadAchievements() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) return;
+
+        const userData = authManager.getUserData(currentUser.email);
+        const achievementsContainer = document.querySelector('#achievements .achievements-grid');
+        
+        if (achievementsContainer) {
+            const achievements = this.calculateAchievements(userData);
+            achievementsContainer.innerHTML = achievements.map(achievement => `
+                <div class="achievement-card ${achievement.unlocked ? 'unlocked' : 'locked'}">
+                    <div class="achievement-icon">
+                        <i class="fas ${achievement.icon}"></i>
+                    </div>
+                    <div class="achievement-info">
+                        <h4>${achievement.title}</h4>
+                        <p>${achievement.description}</p>
+                        <div class="achievement-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${achievement.progress}%"></div>
+                            </div>
+                            <span class="progress-text">${achievement.progressText}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    }
+
+    // Calculate user achievements
+    calculateAchievements(userData) {
+        const achievements = [
+            {
+                id: 'first-book',
+                title: 'First Steps',
+                description: 'Complete your first book',
+                icon: 'fa-book-open',
+                unlocked: userData.readingHistory.length >= 1,
+                progress: Math.min((userData.readingHistory.length / 1) * 100, 100),
+                progressText: `${userData.readingHistory.length}/1 books`
+            },
+            {
+                id: 'bookworm',
+                title: 'Bookworm',
+                description: 'Read 10 books',
+                icon: 'fa-glasses',
+                unlocked: userData.readingHistory.length >= 10,
+                progress: Math.min((userData.readingHistory.length / 10) * 100, 100),
+                progressText: `${userData.readingHistory.length}/10 books`
+            },
+            {
+                id: 'speed-reader',
+                title: 'Speed Reader',
+                description: 'Read 1000 pages',
+                icon: 'fa-tachometer-alt',
+                unlocked: userData.totalPagesRead >= 1000,
+                progress: Math.min((userData.totalPagesRead / 1000) * 100, 100),
+                progressText: `${userData.totalPagesRead}/1000 pages`
+            },
+            {
+                id: 'streak-master',
+                title: 'Streak Master',
+                description: 'Maintain a 30-day reading streak',
+                icon: 'fa-fire',
+                unlocked: userData.readingStreak >= 30,
+                progress: Math.min((userData.readingStreak / 30) * 100, 100),
+                progressText: `${userData.readingStreak}/30 days`
+            },
+            {
+                id: 'goal-crusher',
+                title: 'Goal Crusher',
+                description: 'Complete your yearly reading goal',
+                icon: 'fa-trophy',
+                unlocked: userData.readingGoals.yearly.completed >= userData.readingGoals.yearly.target,
+                progress: Math.min((userData.readingGoals.yearly.completed / userData.readingGoals.yearly.target) * 100, 100),
+                progressText: `${userData.readingGoals.yearly.completed}/${userData.readingGoals.yearly.target} books`
+            },
+            {
+                id: 'diverse-reader',
+                title: 'Diverse Reader',
+                description: 'Read books from 5 different genres',
+                icon: 'fa-palette',
+                unlocked: false, // Would need genre tracking
+                progress: 60,
+                progressText: '3/5 genres'
+            }
+        ];
+
+        return achievements;
     }
 
     // Load section-specific data
     loadSectionData(section) {
         switch (section) {
+            case 'overview':
+                this.loadOverviewData();
+                break;
+            case 'borrowed':
+                this.loadBorrowedBooks();
+                break;
             case 'browse':
                 this.loadBrowseBooks();
                 break;
@@ -287,9 +469,115 @@ class DashboardManager {
             case 'recommendations':
                 this.loadRecommendationsData();
                 break;
+            case 'community':
+                this.loadCommunityData();
+                break;
+            case 'history':
+                this.loadReadingHistory();
+                break;
             case 'notifications':
                 this.loadNotifications();
                 break;
+            case 'achievements':
+                this.loadAchievements();
+                break;
+        }
+    }
+
+    // Load community data
+    loadCommunityData() {
+        // Initialize community tabs
+        this.initializeCommunityTabs();
+    }
+
+    // Initialize community tabs functionality
+    initializeCommunityTabs() {
+        const tabButtons = document.querySelectorAll('.community-tabs .tab-btn');
+        const tabContents = document.querySelectorAll('.community-content .tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetTab = button.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // Initialize discussion form
+        const discussionInput = document.querySelector('.discussion-input');
+        const startDiscussionBtn = document.querySelector('.start-discussion .btn');
+        
+        if (startDiscussionBtn) {
+            startDiscussionBtn.addEventListener('click', () => {
+                if (discussionInput && discussionInput.value.trim()) {
+                    showNotification('Discussion started! Other members will be able to see and respond to your post.', 'success');
+                    discussionInput.value = '';
+                } else {
+                    showNotification('Please enter a discussion topic', 'error');
+                }
+            });
+        }
+
+        // Initialize notification filters
+        this.initializeNotificationFilters();
+    }
+
+    // Initialize notification filters
+    initializeNotificationFilters() {
+        const filterButtons = document.querySelectorAll('.notification-filters .filter-btn');
+        const markAllReadBtn = document.getElementById('markAllRead');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const filter = button.getAttribute('data-filter');
+                
+                // Remove active class from all filter buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Filter notifications based on type
+                this.filterNotifications(filter);
+            });
+        });
+
+        if (markAllReadBtn) {
+            markAllReadBtn.addEventListener('click', () => {
+                this.markAllNotificationsRead();
+            });
+        }
+    }
+
+    // Filter notifications by type
+    filterNotifications(filter) {
+        const notifications = document.querySelectorAll('.notification-item');
+        
+        notifications.forEach(notification => {
+            if (filter === 'all') {
+                notification.style.display = 'flex';
+            } else {
+                const hasFilterClass = notification.classList.contains(`notification-${filter}`);
+                notification.style.display = hasFilterClass ? 'flex' : 'none';
+            }
+        });
+    }
+
+    // Mark all notifications as read
+    markAllNotificationsRead() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) return;
+
+        const userData = authManager.getUserData(currentUser.email);
+        if (userData && userData.notifications) {
+            userData.notifications = [];
+            authManager.updateUserData(currentUser.email, userData);
+            this.loadNotifications();
+            showNotification('All notifications marked as read', 'success');
         }
     }
 
@@ -504,11 +792,32 @@ function borrowBook(bookElement) {
         return;
     }
 
+    // Check user's current borrowed books count
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!currentUser) {
+        showNotification('Please log in to borrow books', 'error');
+        return;
+    }
+
+    const userData = authManager.getUserData(currentUser.email);
+    if (userData.borrowedBooks.length >= 5) {
+        showNotification('Maximum borrow limit reached (5 books)', 'error');
+        return;
+    }
+
     const result = authManager.borrowBook(book);
     if (result.success) {
         showNotification('Book borrowed successfully!', 'success');
         bookManager.updateBookAvailability(bookId, false);
-        dashboardManager.refreshCurrentSection();
+        
+        // Update dashboard sections
+        if (typeof dashboardManager !== 'undefined') {
+            dashboardManager.loadStats();
+            dashboardManager.refreshCurrentSection();
+        }
+        
+        // Update admin stats if admin is logged in
+        updateAdminStats();
     } else {
         showNotification(result.message, 'error');
     }
@@ -517,12 +826,35 @@ function borrowBook(bookElement) {
 // Return book
 function returnBook(bookElement) {
     const bookId = bookElement.dataset.bookId;
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if (!currentUser) {
+        showNotification('Please log in to return books', 'error');
+        return;
+    }
+
     const result = authManager.returnBook(bookId);
     
     if (result.success) {
         showNotification('Book returned successfully!', 'success');
         bookManager.updateBookAvailability(bookId, true);
-        dashboardManager.refreshCurrentSection();
+        
+        // Update dashboard sections
+        if (typeof dashboardManager !== 'undefined') {
+            dashboardManager.loadStats();
+            dashboardManager.refreshCurrentSection();
+        }
+        
+        // Update admin stats if admin is logged in
+        updateAdminStats();
+        
+        // Add to reading history with completion tracking
+        const userData = authManager.getUserData(currentUser.email);
+        const returnedBook = userData.readingHistory.find(h => h.bookId === bookId);
+        if (returnedBook) {
+            userData.totalPagesRead += Math.floor(Math.random() * 200) + 100; // Mock pages read
+            authManager.updateUserData(currentUser.email, userData);
+        }
     } else {
         showNotification(result.message, 'error');
     }
@@ -532,21 +864,58 @@ function returnBook(bookElement) {
 function renewBook(bookElement) {
     const bookId = bookElement.dataset.bookId;
     const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    if (!currentUser) {
+        showNotification('Please log in to renew books', 'error');
+        return;
+    }
+
     const userData = authManager.getUserData(currentUser.email);
     const book = userData.borrowedBooks.find(b => b.id === bookId);
     
-    if (book && book.renewals < 2) {
-        book.renewals++;
-        const newDueDate = new Date(book.dueDate);
-        newDueDate.setDate(newDueDate.getDate() + 14);
-        book.dueDate = newDueDate.toISOString().split('T')[0];
-        
-        authManager.updateUserData(currentUser.email, userData);
-        showNotification('Book renewed successfully!', 'success');
-        dashboardManager.refreshCurrentSection();
-    } else {
-        showNotification('Maximum renewals reached', 'error');
+    if (!book) {
+        showNotification('Book not found in your borrowed list', 'error');
+        return;
     }
+
+    if (book.renewals >= 2) {
+        showNotification('Maximum renewals reached (2 renewals allowed)', 'error');
+        return;
+    }
+
+    // Check if book is overdue
+    const today = new Date();
+    const dueDate = new Date(book.dueDate);
+    if (today > dueDate) {
+        showNotification('Cannot renew overdue books. Please return first.', 'error');
+        return;
+    }
+
+    // Renew the book
+    book.renewals++;
+    const newDueDate = new Date(book.dueDate);
+    newDueDate.setDate(newDueDate.getDate() + 14);
+    book.dueDate = newDueDate.toISOString().split('T')[0];
+    
+    // Update book status
+    const daysDiff = Math.ceil((newDueDate - today) / (1000 * 60 * 60 * 24));
+    if (daysDiff <= 3) {
+        book.status = 'due-soon';
+    } else {
+        book.status = 'active';
+    }
+    
+    authManager.updateUserData(currentUser.email, userData);
+    showNotification(`Book renewed successfully! New due date: ${formatDate(book.dueDate)}`, 'success');
+    
+    // Update dashboard sections
+    if (typeof dashboardManager !== 'undefined') {
+        dashboardManager.loadStats();
+        dashboardManager.refreshCurrentSection();
+    }
+    
+    // Update admin stats if admin is logged in
+    updateAdminStats();
 }
 
 // Toggle favorite
@@ -591,6 +960,19 @@ function showNotification(message, type = 'info') {
     });
 }
 
+// Update admin stats function
+function updateAdminStats() {
+    // This function will be called to update admin dashboard statistics
+    // when books are borrowed, returned, or renewed
+    const adminStatsEvent = new CustomEvent('updateAdminStats', {
+        detail: {
+            timestamp: new Date().toISOString(),
+            action: 'book_transaction'
+        }
+    });
+    document.dispatchEvent(adminStatsEvent);
+}
+
 // Refresh current section
 function refreshCurrentSection() {
     if (window.dashboardManager) {
@@ -601,7 +983,58 @@ function refreshCurrentSection() {
     }
 }
 
+// Utility function for date formatting
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+}
+
+// Utility function to check if date is overdue
+function isOverdue(dateString) {
+    const today = new Date();
+    const dueDate = new Date(dateString);
+    return today > dueDate;
+}
+
+// Utility function to get days until due
+function getDaysUntilDue(dateString) {
+    const today = new Date();
+    const dueDate = new Date(dateString);
+    return Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+}
+
+// Global function to dismiss notifications
+function dismissNotification(notificationId) {
+    const result = authManager.dismissNotification(notificationId);
+    if (result.success) {
+        showNotification('Notification dismissed', 'success');
+        // Reload notifications section if active
+        if (typeof dashboardManager !== 'undefined') {
+            dashboardManager.loadNotifications();
+        }
+    }
+}
+
+// Global function to add to favorites from history
+function addToFavorites(bookId) {
+    const result = authManager.addToFavorites(bookId);
+    if (result.success) {
+        showNotification('Added to favorites', 'success');
+        // Update favorites section if active
+        if (typeof dashboardManager !== 'undefined') {
+            dashboardManager.loadFavoriteBooks();
+            dashboardManager.loadStats();
+        }
+    } else {
+        showNotification(result.message, 'error');
+    }
+}
+
 // Initialize dashboard when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    window.dashboardManager = new DashboardManager();
+    const dashboardManager = new DashboardManager();
 });

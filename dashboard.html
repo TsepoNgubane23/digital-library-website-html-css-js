@@ -243,15 +243,51 @@
                 </div>
                 
                 <div class="search-filters">
-                    <input type="text" placeholder="Search books..." class="search-input">
-                    <select class="filter-select">
-                        <option value="">All Categories</option>
-                        <option value="fiction">Fiction</option>
-                        <option value="non-fiction">Non-Fiction</option>
-                        <option value="science">Science</option>
-                        <option value="history">History</option>
-                        <option value="biography">Biography</option>
-                    </select>
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="dashboardBookSearch" placeholder="Search books by title, author, or genre..." class="search-input">
+                        <button type="button" id="dashboardClearSearch" class="clear-search" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="filter-controls">
+                        <select id="dashboardGenreFilter" class="filter-select">
+                            <option value="">All Genres</option>
+                            <option value="Fiction">Fiction</option>
+                            <option value="Classic">Classic</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Self-Help">Self-Help</option>
+                            <option value="History">History</option>
+                            <option value="Science">Science</option>
+                            <option value="Biography">Biography</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Mystery">Mystery</option>
+                        </select>
+                        
+                        <select id="dashboardAvailabilityFilter" class="filter-select">
+                            <option value="">All Books</option>
+                            <option value="available">Available</option>
+                            <option value="borrowed">Borrowed</option>
+                        </select>
+                        
+                        <select id="dashboardSortBy" class="filter-select">
+                            <option value="title">Title (A-Z)</option>
+                            <option value="author">Author (A-Z)</option>
+                            <option value="popularity">Popularity</option>
+                            <option value="newest">Newest First</option>
+                        </select>
+                        
+                        <button type="button" id="dashboardResetFilters" class="btn btn-secondary btn-small">
+                            <i class="fas fa-refresh"></i> Reset
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Search Results Summary -->
+                <div class="search-results-summary" id="dashboardSearchSummary" style="display: none;">
+                    <span id="dashboardResultsCount">0</span> books found
+                    <span id="dashboardSearchQuery"></span>
                 </div>
                 
                 <div class="books-grid">
@@ -667,6 +703,242 @@
                 </div>
             </section>
 
+            <!-- Community Section -->
+            <section id="community" class="dashboard-section">
+                <div class="section-header">
+                    <h1>Community</h1>
+                    <p>Connect with fellow readers and discover new perspectives</p>
+                </div>
+                
+                <div class="community-tabs">
+                    <button class="tab-btn active" data-tab="discussions">Book Discussions</button>
+                    <button class="tab-btn" data-tab="reviews">Recent Reviews</button>
+                    <button class="tab-btn" data-tab="clubs">Reading Clubs</button>
+                    <button class="tab-btn" data-tab="events">Events</button>
+                </div>
+
+                <div class="community-content">
+                    <!-- Book Discussions Tab -->
+                    <div id="discussions" class="tab-content active">
+                        <div class="discussion-list">
+                            <div class="discussion-item">
+                                <div class="discussion-avatar">
+                                    <img src="images/NC Nene.jpg" alt="NC Nene">
+                                </div>
+                                <div class="discussion-content">
+                                    <div class="discussion-header">
+                                        <h4>What did you think about the ending of "1984"?</h4>
+                                        <span class="discussion-meta">NC Nene • 2 hours ago</span>
+                                    </div>
+                                    <p>I just finished reading 1984 and I'm still processing that ending. The way Winston's character arc concludes is both devastating and brilliant. What are your thoughts on Orwell's message?</p>
+                                    <div class="discussion-stats">
+                                        <span><i class="fas fa-comments"></i> 12 replies</span>
+                                        <span><i class="fas fa-heart"></i> 8 likes</span>
+                                        <button class="btn btn-outline btn-small">Join Discussion</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="discussion-item">
+                                <div class="discussion-avatar">
+                                    <img src="images/Philasande.jpg" alt="Philasande">
+                                </div>
+                                <div class="discussion-content">
+                                    <div class="discussion-header">
+                                        <h4>Best self-help books for productivity?</h4>
+                                        <span class="discussion-meta">Philasande Ngobese • 5 hours ago</span>
+                                    </div>
+                                    <p>I'm looking for recommendations on productivity and personal development. I loved "Atomic Habits" - what should I read next?</p>
+                                    <div class="discussion-stats">
+                                        <span><i class="fas fa-comments"></i> 18 replies</span>
+                                        <span><i class="fas fa-heart"></i> 15 likes</span>
+                                        <button class="btn btn-outline btn-small">Join Discussion</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="discussion-item">
+                                <div class="discussion-avatar">
+                                    <div class="avatar-placeholder">JD</div>
+                                </div>
+                                <div class="discussion-content">
+                                    <div class="discussion-header">
+                                        <h4>Monthly Book Club: "The Midnight Library" Discussion</h4>
+                                        <span class="discussion-meta">Jane Doe • 1 day ago</span>
+                                    </div>
+                                    <p>Let's discuss Matt Haig's "The Midnight Library"! What did you think about the concept of infinite lives and parallel universes?</p>
+                                    <div class="discussion-stats">
+                                        <span><i class="fas fa-comments"></i> 24 replies</span>
+                                        <span><i class="fas fa-heart"></i> 32 likes</span>
+                                        <button class="btn btn-outline btn-small">Join Discussion</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="start-discussion">
+                            <h3>Start a New Discussion</h3>
+                            <div class="discussion-form">
+                                <input type="text" placeholder="What's on your mind about books?" class="discussion-input">
+                                <button class="btn btn-primary">Start Discussion</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Reviews Tab -->
+                    <div id="reviews" class="tab-content">
+                        <div class="reviews-list">
+                            <div class="review-item">
+                                <div class="review-book">
+                                    <img src="images/Educated.png" alt="Educated">
+                                </div>
+                                <div class="review-content">
+                                    <div class="review-header">
+                                        <h4>Educated</h4>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <span>5.0</span>
+                                        </div>
+                                    </div>
+                                    <p class="review-author">by Tara Westover</p>
+                                    <p class="review-text">"A powerful memoir that shows the transformative power of education. Westover's journey from an isolated childhood to academic success is both heartbreaking and inspiring."</p>
+                                    <div class="review-meta">
+                                        <span>Reviewed by Sarah M. • 3 hours ago</span>
+                                        <span><i class="fas fa-thumbs-up"></i> 12 helpful</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="review-item">
+                                <div class="review-book">
+                                    <img src="images/The Great Gatsby.png" alt="The Great Gatsby">
+                                </div>
+                                <div class="review-content">
+                                    <div class="review-header">
+                                        <h4>The Great Gatsby</h4>
+                                        <div class="review-rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="far fa-star"></i>
+                                            <span>4.2</span>
+                                        </div>
+                                    </div>
+                                    <p class="review-author">by F. Scott Fitzgerald</p>
+                                    <p class="review-text">"A timeless classic that captures the essence of the American Dream. Fitzgerald's prose is beautiful, though the pacing can be slow at times."</p>
+                                    <div class="review-meta">
+                                        <span>Reviewed by Mike R. • 1 day ago</span>
+                                        <span><i class="fas fa-thumbs-up"></i> 8 helpful</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reading Clubs Tab -->
+                    <div id="clubs" class="tab-content">
+                        <div class="clubs-grid">
+                            <div class="club-card">
+                                <div class="club-header">
+                                    <h3>Classic Literature Club</h3>
+                                    <span class="club-members">247 members</span>
+                                </div>
+                                <p>Exploring timeless classics and their relevance today. Currently reading "Pride and Prejudice".</p>
+                                <div class="club-stats">
+                                    <span><i class="fas fa-book"></i> 12 books read</span>
+                                    <span><i class="fas fa-comments"></i> Active discussions</span>
+                                </div>
+                                <button class="btn btn-primary btn-small">Join Club</button>
+                            </div>
+
+                            <div class="club-card">
+                                <div class="club-header">
+                                    <h3>Sci-Fi Enthusiasts</h3>
+                                    <span class="club-members">189 members</span>
+                                </div>
+                                <p>Dive into futuristic worlds and explore the possibilities of tomorrow. Next read: "Dune".</p>
+                                <div class="club-stats">
+                                    <span><i class="fas fa-book"></i> 8 books read</span>
+                                    <span><i class="fas fa-comments"></i> Weekly meetups</span>
+                                </div>
+                                <button class="btn btn-primary btn-small">Join Club</button>
+                            </div>
+
+                            <div class="club-card">
+                                <div class="club-header">
+                                    <h3>Personal Development</h3>
+                                    <span class="club-members">156 members</span>
+                                </div>
+                                <p>Transform your life through reading. Focus on self-improvement and productivity books.</p>
+                                <div class="club-stats">
+                                    <span><i class="fas fa-book"></i> 15 books read</span>
+                                    <span><i class="fas fa-comments"></i> Goal tracking</span>
+                                </div>
+                                <button class="btn btn-primary btn-small">Join Club</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Events Tab -->
+                    <div id="events" class="tab-content">
+                        <div class="events-list">
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <span class="event-day">28</span>
+                                    <span class="event-month">Sep</span>
+                                </div>
+                                <div class="event-content">
+                                    <h4>Virtual Author Q&A: Matt Haig</h4>
+                                    <p>Join us for an exclusive Q&A session with bestselling author Matt Haig discussing "The Midnight Library" and his writing process.</p>
+                                    <div class="event-meta">
+                                        <span><i class="fas fa-clock"></i> 7:00 PM - 8:30 PM</span>
+                                        <span><i class="fas fa-users"></i> 45 attending</span>
+                                    </div>
+                                    <button class="btn btn-primary btn-small">RSVP</button>
+                                </div>
+                            </div>
+
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <span class="event-day">05</span>
+                                    <span class="event-month">Oct</span>
+                                </div>
+                                <div class="event-content">
+                                    <h4>Book Swap Meet</h4>
+                                    <p>Bring books you've finished reading and swap them with other community members. Great way to discover new reads!</p>
+                                    <div class="event-meta">
+                                        <span><i class="fas fa-clock"></i> 2:00 PM - 5:00 PM</span>
+                                        <span><i class="fas fa-users"></i> 23 attending</span>
+                                    </div>
+                                    <button class="btn btn-primary btn-small">RSVP</button>
+                                </div>
+                            </div>
+
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <span class="event-day">12</span>
+                                    <span class="event-month">Oct</span>
+                                </div>
+                                <div class="event-content">
+                                    <h4>Speed Reading Workshop</h4>
+                                    <p>Learn techniques to improve your reading speed while maintaining comprehension. Perfect for busy readers!</p>
+                                    <div class="event-meta">
+                                        <span><i class="fas fa-clock"></i> 6:00 PM - 8:00 PM</span>
+                                        <span><i class="fas fa-users"></i> 12 attending</span>
+                                    </div>
+                                    <button class="btn btn-primary btn-small">RSVP</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Notifications Section -->
             <section id="notifications" class="dashboard-section">
                 <div class="section-header">
@@ -674,8 +946,52 @@
                     <p>Stay updated with your library activities</p>
                 </div>
                 
+                <div class="notifications-controls">
+                    <div class="notification-filters">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="warning">Due Dates</button>
+                        <button class="filter-btn" data-filter="info">Updates</button>
+                        <button class="filter-btn" data-filter="success">Achievements</button>
+                    </div>
+                    <button class="btn btn-outline btn-small" id="markAllRead">Mark All Read</button>
+                </div>
+
                 <div class="notifications-list">
                     <!-- Notifications will be populated by JavaScript -->
+                </div>
+
+                <div class="notification-settings">
+                    <h3>Notification Preferences</h3>
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" checked>
+                                <span class="checkmark"></span>
+                                Due date reminders
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" checked>
+                                <span class="checkmark"></span>
+                                New book recommendations
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox" checked>
+                                <span class="checkmark"></span>
+                                Community activity
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="setting-label">
+                                <input type="checkbox">
+                                <span class="checkmark"></span>
+                                Reading goal updates
+                            </label>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -815,6 +1131,222 @@
                     cover.style.boxShadow = '';
                 }
             });
+
+            // Dashboard Search and Filter functionality
+            class DashboardBookSearchFilter {
+                constructor() {
+                    this.books = [];
+                    this.filteredBooks = [];
+                    this.init();
+                }
+
+                init() {
+                    this.loadBooks();
+                    this.setupEventListeners();
+                }
+
+                loadBooks() {
+                    if (typeof bookManager !== 'undefined') {
+                        this.books = bookManager.getAllBooks().map(book => ({
+                            ...book,
+                            element: this.createBookElement(book)
+                        }));
+                        this.filteredBooks = [...this.books];
+                        this.displayBooks(this.filteredBooks);
+                    }
+                }
+
+                createBookElement(book) {
+                    const bookCard = document.createElement('div');
+                    bookCard.className = 'book-card';
+                    bookCard.setAttribute('data-book-id', book.id);
+                    bookCard.innerHTML = `
+                        <div class="book-cover-image">
+                            <img src="${book.cover}" alt="${book.title}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDIwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjZjNmNGY2Ii8+CjxwYXRoIGQ9Im0xMDAgMTUwIDUwLTUwdjEwMGwtNTAtNTB6IiBmaWxsPSIjOWNhM2FmIi8+Cjx0ZXh0IHg9IjEwMCIgeT0iMjUwIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNmI3MjgwIiBmb250LXNpemU9IjE0Ij5ObyBJbWFnZTwvdGV4dD4KPC9zdmc+'">
+                        </div>
+                        <div class="book-info">
+                            <h3>${book.title}</h3>
+                            <p class="book-author">by ${book.author}</p>
+                            <div class="book-status ${book.available ? 'status-available' : 'status-borrowed'}">
+                                <i class="fas ${book.available ? 'fa-check-circle' : 'fa-clock'}"></i>
+                                ${book.available ? 'Available' : 'Borrowed'}
+                            </div>
+                            <div class="book-actions">
+                                ${book.available ? 
+                                    '<button class="btn btn-primary btn-small btn-borrow">Borrow</button>' :
+                                    '<button class="btn btn-secondary btn-small" disabled>Unavailable</button>'
+                                }
+                                <button class="btn btn-outline btn-small btn-favorite">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    return bookCard;
+                }
+
+                setupEventListeners() {
+                    const searchInput = document.getElementById('dashboardBookSearch');
+                    const clearSearch = document.getElementById('dashboardClearSearch');
+                    const genreFilter = document.getElementById('dashboardGenreFilter');
+                    const availabilityFilter = document.getElementById('dashboardAvailabilityFilter');
+                    const sortBy = document.getElementById('dashboardSortBy');
+                    const resetFilters = document.getElementById('dashboardResetFilters');
+
+                    if (searchInput) {
+                        let searchTimeout;
+                        searchInput.addEventListener('input', (e) => {
+                            clearTimeout(searchTimeout);
+                            searchTimeout = setTimeout(() => {
+                                this.applyFilters();
+                                this.toggleClearButton(e.target.value);
+                            }, 300);
+                        });
+                    }
+
+                    if (clearSearch) {
+                        clearSearch.addEventListener('click', () => {
+                            searchInput.value = '';
+                            this.applyFilters();
+                            this.toggleClearButton('');
+                        });
+                    }
+
+                    [genreFilter, availabilityFilter, sortBy].forEach(filter => {
+                        if (filter) {
+                            filter.addEventListener('change', () => this.applyFilters());
+                        }
+                    });
+
+                    if (resetFilters) {
+                        resetFilters.addEventListener('click', () => this.resetAllFilters());
+                    }
+                }
+
+                toggleClearButton(value) {
+                    const clearButton = document.getElementById('dashboardClearSearch');
+                    if (clearButton) {
+                        clearButton.style.display = value ? 'block' : 'none';
+                    }
+                }
+
+                applyFilters() {
+                    const searchInput = document.getElementById('dashboardBookSearch');
+                    const genreFilter = document.getElementById('dashboardGenreFilter');
+                    const availabilityFilter = document.getElementById('dashboardAvailabilityFilter');
+                    const sortBy = document.getElementById('dashboardSortBy');
+
+                    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+                    const selectedGenre = genreFilter ? genreFilter.value : '';
+                    const selectedAvailability = availabilityFilter ? availabilityFilter.value : '';
+                    const sortByValue = sortBy ? sortBy.value : 'title';
+
+                    this.filteredBooks = this.books.filter(book => {
+                        const matchesSearch = !searchTerm || 
+                            book.title.toLowerCase().includes(searchTerm) ||
+                            book.author.toLowerCase().includes(searchTerm) ||
+                            (book.genre && book.genre.toLowerCase().includes(searchTerm));
+
+                        const matchesGenre = !selectedGenre || book.genre === selectedGenre;
+                        const matchesAvailability = !selectedAvailability || 
+                            (selectedAvailability === 'available' && book.available) ||
+                            (selectedAvailability === 'borrowed' && !book.available);
+
+                        return matchesSearch && matchesGenre && matchesAvailability;
+                    });
+
+                    this.sortBooks(sortByValue);
+                    this.displayBooks(this.filteredBooks);
+                    this.updateSearchSummary(searchTerm);
+                }
+
+                sortBooks(sortBy) {
+                    switch (sortBy) {
+                        case 'title':
+                            this.filteredBooks.sort((a, b) => a.title.localeCompare(b.title));
+                            break;
+                        case 'author':
+                            this.filteredBooks.sort((a, b) => a.author.localeCompare(b.author));
+                            break;
+                        case 'popularity':
+                            this.filteredBooks.sort((a, b) => (b.popularity || 0) - (a.popularity || 0));
+                            break;
+                        case 'newest':
+                            this.filteredBooks.reverse();
+                            break;
+                    }
+                }
+
+                displayBooks(books) {
+                    const booksGrid = document.querySelector('#browse .books-grid');
+                    if (!booksGrid) return;
+
+                    if (books.length === 0) {
+                        booksGrid.innerHTML = `
+                            <div class="no-results">
+                                <i class="fas fa-search"></i>
+                                <h3>No books found</h3>
+                                <p>Try adjusting your search terms or filters</p>
+                            </div>
+                        `;
+                    } else {
+                        booksGrid.innerHTML = '';
+                        books.forEach((book, index) => {
+                            const bookElement = book.element.cloneNode(true);
+                            bookElement.classList.add('fade-in');
+                            bookElement.style.animationDelay = `${index * 0.1}s`;
+                            booksGrid.appendChild(bookElement);
+                        });
+                    }
+                }
+
+                updateSearchSummary(searchTerm) {
+                    const searchSummary = document.getElementById('dashboardSearchSummary');
+                    const resultsCount = document.getElementById('dashboardResultsCount');
+                    const searchQuery = document.getElementById('dashboardSearchQuery');
+
+                    if (searchSummary && resultsCount && searchQuery) {
+                        if (searchTerm || this.hasActiveFilters()) {
+                            searchSummary.style.display = 'block';
+                            resultsCount.textContent = this.filteredBooks.length;
+                            searchQuery.textContent = searchTerm ? `for "${searchTerm}"` : 'with current filters';
+                        } else {
+                            searchSummary.style.display = 'none';
+                        }
+                    }
+                }
+
+                hasActiveFilters() {
+                    const genreFilter = document.getElementById('dashboardGenreFilter');
+                    const availabilityFilter = document.getElementById('dashboardAvailabilityFilter');
+                    const sortBy = document.getElementById('dashboardSortBy');
+
+                    return (genreFilter && genreFilter.value) ||
+                           (availabilityFilter && availabilityFilter.value) ||
+                           (sortBy && sortBy.value !== 'title');
+                }
+
+                resetAllFilters() {
+                    const searchInput = document.getElementById('dashboardBookSearch');
+                    const genreFilter = document.getElementById('dashboardGenreFilter');
+                    const availabilityFilter = document.getElementById('dashboardAvailabilityFilter');
+                    const sortBy = document.getElementById('dashboardSortBy');
+
+                    if (searchInput) searchInput.value = '';
+                    if (genreFilter) genreFilter.value = '';
+                    if (availabilityFilter) availabilityFilter.value = '';
+                    if (sortBy) sortBy.value = 'title';
+                    
+                    this.toggleClearButton('');
+                    this.applyFilters();
+                }
+            }
+
+            // Initialize dashboard search filter
+            let dashboardSearchFilter;
+            setTimeout(() => {
+                dashboardSearchFilter = new DashboardBookSearchFilter();
+            }, 1000);
 
             // Global event handlers for book actions
             document.addEventListener('click', function(e) {

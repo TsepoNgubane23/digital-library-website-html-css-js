@@ -177,7 +177,66 @@
     <section class="books-section" id="books">
         <div class="container">
             <h2>Popular Books</h2>
-            <div class="books-grid">
+            
+            <!-- Search and Filter Controls -->
+            <div class="search-filter-container">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="bookSearch" placeholder="Search books by title, author, or genre..." class="search-input">
+                    <button type="button" id="clearSearch" class="clear-search" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="filter-controls">
+                    <div class="filter-group">
+                        <label for="genreFilter">Genre:</label>
+                        <select id="genreFilter" class="filter-select">
+                            <option value="">All Genres</option>
+                            <option value="Fiction">Fiction</option>
+                            <option value="Classic">Classic</option>
+                            <option value="Fantasy">Fantasy</option>
+                            <option value="Self-Help">Self-Help</option>
+                            <option value="History">History</option>
+                            <option value="Science">Science</option>
+                            <option value="Biography">Biography</option>
+                            <option value="Romance">Romance</option>
+                            <option value="Mystery">Mystery</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="availabilityFilter">Availability:</label>
+                        <select id="availabilityFilter" class="filter-select">
+                            <option value="">All Books</option>
+                            <option value="available">Available</option>
+                            <option value="borrowed">Borrowed</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-group">
+                        <label for="sortBy">Sort by:</label>
+                        <select id="sortBy" class="filter-select">
+                            <option value="title">Title (A-Z)</option>
+                            <option value="author">Author (A-Z)</option>
+                            <option value="popularity">Popularity</option>
+                            <option value="newest">Newest First</option>
+                        </select>
+                    </div>
+                    
+                    <button type="button" id="resetFilters" class="btn btn-secondary btn-small">
+                        <i class="fas fa-refresh"></i> Reset
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Results Summary -->
+            <div class="search-results-summary" id="searchSummary" style="display: none;">
+                <span id="resultsCount">0</span> books found
+                <span id="searchQuery"></span>
+            </div>
+            
+            <div class="books-grid" id="booksGrid">
                 <div class="book-card">
                     <div class="book-cover-image">
                         <img src="images/The Great Gatsby.png" alt="The Great Gatsby">
@@ -784,62 +843,194 @@
         // Enhanced search functionality
         const searchInput = document.getElementById('searchInput');
         if (searchInput) {
-            searchInput.addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
-                const bookCards = document.querySelectorAll('.book-card');
-                
-                bookCards.forEach(card => {
-                    const title = card.querySelector('h3').textContent.toLowerCase();
-                    const author = card.querySelector('.book-author').textContent.toLowerCase();
-                    
-                    if (title.includes(searchTerm) || author.includes(searchTerm)) {
-                        card.style.display = 'block';
-                        card.style.animation = 'fadeInUp 0.5s ease-out';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            });
-        }
-
-        // Contact form functionality
-        const contactForm = document.getElementById('contactForm');
-        if (contactForm) {
-            contactForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Get form data
-                const formData = new FormData(contactForm);
-                const name = formData.get('name');
-                const email = formData.get('email');
-                const message = formData.get('message');
-                
-                // Simple validation
-                if (!name || !email || !message) {
-                    alert('Please fill in all fields');
-                    return;
+            // Enhanced search and filter functionality
+            class BookSearchFilter {
+                constructor() {
+                    this.books = this.getAllBooks();
+                    this.filteredBooks = [...this.books];
+                    this.init();
                 }
-                
-                // Simulate form submission
-                const submitBtn = contactForm.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerHTML;
-                
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-                submitBtn.disabled = true;
-                
-                setTimeout(() => {
-                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Message Sent!';
-                    submitBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+
+                init() {
+                    this.setupEventListeners();
+                    this.displayBooks(this.books);
+                }
+
+                getAllBooks() {
+                    const bookCards = document.querySelectorAll('.book-card');
+                    return Array.from(bookCards).map(card => ({
+                        element: card,
+                        title: card.querySelector('h3').textContent,
+                        author: card.querySelector('.book-author').textContent.replace('by ', ''),
+                        genre: this.getBookGenre(card.querySelector('h3').textContent),
+                        availability: card.querySelector('.book-status').classList.contains('status-available') ? 'available' : 'borrowed',
+                        popularity: Math.floor(Math.random() * 100) + 1 // Mock popularity score
+                    }));
+                }
+
+                getBookGenre(title) {
+                    const genreMap = {
+                        'The Great Gatsby': 'Classic',
+                        'To Kill a Mockingbird': 'Classic',
+                        '1984': 'Fiction',
+                        'Pride and Prejudice': 'Romance',
+                        'Harry Potter and the Philosopher\'s Stone': 'Fantasy',
+                        'The Lord of the Rings': 'Fantasy',
+                        'Atomic Habits': 'Self-Help',
+                        'Sapiens': 'History',
+                        'The Midnight Library': 'Fiction',
+                        'Educated': 'Biography',
+                        'The Alchemist': 'Fiction',
+                        'Dune': 'Science',
+                        'The Seven Husbands of Evelyn Hugo': 'Romance'
+                    };
+                    return genreMap[title] || 'Fiction';
+                }
+
+                setupEventListeners() {
+                    const searchInput = document.getElementById('bookSearch');
+                    const clearSearch = document.getElementById('clearSearch');
+                    const genreFilter = document.getElementById('genreFilter');
+                    const availabilityFilter = document.getElementById('availabilityFilter');
+                    const sortBy = document.getElementById('sortBy');
+                    const resetFilters = document.getElementById('resetFilters');
+
+                    // Search input with debounce
+                    let searchTimeout;
+                    searchInput.addEventListener('input', (e) => {
+                        clearTimeout(searchTimeout);
+                        searchTimeout = setTimeout(() => {
+                            this.applyFilters();
+                            this.toggleClearButton(e.target.value);
+                        }, 300);
+                    });
+
+                    // Clear search
+                    clearSearch.addEventListener('click', () => {
+                        searchInput.value = '';
+                        this.applyFilters();
+                        this.toggleClearButton('');
+                    });
+
+                    // Filter controls
+                    [genreFilter, availabilityFilter, sortBy].forEach(filter => {
+                        filter.addEventListener('change', () => this.applyFilters());
+                    });
+
+                    // Reset filters
+                    resetFilters.addEventListener('click', () => this.resetAllFilters());
+                }
+
+                toggleClearButton(value) {
+                    const clearButton = document.getElementById('clearSearch');
+                    clearButton.style.display = value ? 'block' : 'none';
+                }
+
+                applyFilters() {
+                    const searchTerm = document.getElementById('bookSearch').value.toLowerCase();
+                    const selectedGenre = document.getElementById('genreFilter').value;
+                    const selectedAvailability = document.getElementById('availabilityFilter').value;
+                    const sortBy = document.getElementById('sortBy').value;
+
+                    // Filter books
+                    this.filteredBooks = this.books.filter(book => {
+                        const matchesSearch = !searchTerm || 
+                            book.title.toLowerCase().includes(searchTerm) ||
+                            book.author.toLowerCase().includes(searchTerm) ||
+                            book.genre.toLowerCase().includes(searchTerm);
+
+                        const matchesGenre = !selectedGenre || book.genre === selectedGenre;
+                        const matchesAvailability = !selectedAvailability || book.availability === selectedAvailability;
+
+                        return matchesSearch && matchesGenre && matchesAvailability;
+                    });
+
+                    // Sort books
+                    this.sortBooks(sortBy);
+
+                    // Display results
+                    this.displayBooks(this.filteredBooks);
+                    this.updateSearchSummary(searchTerm);
+                }
+
+                sortBooks(sortBy) {
+                    switch (sortBy) {
+                        case 'title':
+                            this.filteredBooks.sort((a, b) => a.title.localeCompare(b.title));
+                            break;
+                        case 'author':
+                            this.filteredBooks.sort((a, b) => a.author.localeCompare(b.author));
+                            break;
+                        case 'popularity':
+                            this.filteredBooks.sort((a, b) => b.popularity - a.popularity);
+                            break;
+                        case 'newest':
+                            this.filteredBooks.reverse(); // Mock newest first
+                            break;
+                    }
+                }
+
+                displayBooks(books) {
+                    const booksGrid = document.getElementById('booksGrid');
                     
-                    // Reset form
-                    contactForm.reset();
-                    
+                    // Show loading state
+                    booksGrid.innerHTML = '<div class="loading-books"><i class="fas fa-spinner"></i></div>';
+
                     setTimeout(() => {
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.disabled = false;
-                        submitBtn.style.background = '';
-                    }, 3000);
-                }, 2000);
+                        if (books.length === 0) {
+                            booksGrid.innerHTML = `
+                                <div class="no-results">
+                                    <i class="fas fa-search"></i>
+                                    <h3>No books found</h3>
+                                    <p>Try adjusting your search terms or filters</p>
+                                </div>
+                            `;
+                        } else {
+                            booksGrid.innerHTML = '';
+                            books.forEach((book, index) => {
+                                const bookElement = book.element.cloneNode(true);
+                                bookElement.classList.add('fade-in');
+                                bookElement.style.animationDelay = `${index * 0.1}s`;
+                                booksGrid.appendChild(bookElement);
+                            });
+                        }
+                    }, 300);
+                }
+
+                updateSearchSummary(searchTerm) {
+                    const searchSummary = document.getElementById('searchSummary');
+                    const resultsCount = document.getElementById('resultsCount');
+                    const searchQuery = document.getElementById('searchQuery');
+
+                    if (searchTerm || this.hasActiveFilters()) {
+                        searchSummary.style.display = 'block';
+                        resultsCount.textContent = this.filteredBooks.length;
+                        searchQuery.textContent = searchTerm ? `for "${searchTerm}"` : 'with current filters';
+                    } else {
+                        searchSummary.style.display = 'none';
+                    }
+                }
+
+                hasActiveFilters() {
+                    return document.getElementById('genreFilter').value ||
+                           document.getElementById('availabilityFilter').value ||
+                           document.getElementById('sortBy').value !== 'title';
+                }
+
+                resetAllFilters() {
+                    document.getElementById('bookSearch').value = '';
+                    document.getElementById('genreFilter').value = '';
+                    document.getElementById('availabilityFilter').value = '';
+                    document.getElementById('sortBy').value = 'title';
+                    this.toggleClearButton('');
+                    this.applyFilters();
+                }
+            }
+
+            // Initialize search and filter functionality
+            let bookSearchFilter;
+            document.addEventListener('DOMContentLoaded', function() {
+                bookSearchFilter = new BookSearchFilter();
             });
         }
 

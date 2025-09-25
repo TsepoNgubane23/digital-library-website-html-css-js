@@ -15,8 +15,8 @@ class AuthManager {
         
         // Default users with enhanced data
         const defaultUsers = {
-            "22310418@live.mut.ac": {
-                email: "22310418@live.mut.ac",
+            "philasandengobese@fake.com": {
+                email: "philasandengobese@fake.com",
                 password: "philasandengobese",
                 name: "Philasande Ngobese",
                 avatar: "images/Philasande.jpg",
@@ -28,8 +28,8 @@ class AuthManager {
                         title: "The Great Gatsby",
                         author: "F. Scott Fitzgerald",
                         cover: "images/The Great Gatsby.png",
-                        borrowDate: "2024-08-15",
-                        dueDate: "2024-08-30",
+                        borrowDate: "2024-09-01",
+                        dueDate: "2024-09-15",
                         status: "overdue",
                         renewals: 0
                     },
@@ -38,8 +38,8 @@ class AuthManager {
                         title: "To Kill a Mockingbird",
                         author: "Harper Lee",
                         cover: "images/To Kill a Mockingbird.png",
-                        borrowDate: "2024-08-27",
-                        dueDate: "2024-09-10",
+                        borrowDate: "2024-09-10",
+                        dueDate: "2024-09-24",
                         status: "due-soon",
                         renewals: 1
                     },
@@ -49,31 +49,34 @@ class AuthManager {
                         author: "J.D. Salinger",
                         cover: "https://images-na.ssl-images-amazon.com/images/S/compressed.photo.goodreads.com/books/1398034300/5107.jpg",
                         borrowDate: "2024-09-01",
-                        dueDate: "2024-09-15",
+                        dueDate: "2024-10-08",
                         status: "active",
                         renewals: 0
                     }
                 ],
                 favorites: ["1984", "pride-prejudice", "lord-flies", "atomic-habits"],
                 readingHistory: [
-                    { bookId: "sapiens", completedDate: "2024-08-01", rating: 5 },
-                    { bookId: "educated", completedDate: "2024-07-15", rating: 4 },
-                    { bookId: "midnight-library", completedDate: "2024-06-30", rating: 5 }
+                    { bookId: "sapiens", completedDate: "2024-08-01", rating: 5, pagesRead: 450 },
+                    { bookId: "educated", completedDate: "2024-07-15", rating: 4, pagesRead: 334 },
+                    { bookId: "midnight-library", completedDate: "2024-06-30", rating: 5, pagesRead: 288 },
+                    { bookId: "becoming", completedDate: "2024-09-10", rating: 5, pagesRead: 426 },
+                    { bookId: "dune", completedDate: "2024-09-20", rating: 4, pagesRead: 688 }
                 ],
                 readingGoals: {
                     monthly: { target: 4, completed: 3 },
-                    yearly: { target: 50, completed: 24 }
+                    yearly: { target: 50, completed: 27 }
                 },
-                readingStreak: 12,
-                totalPagesRead: 1247,
+                readingStreak: 15,
+                totalPagesRead: 1580,
                 notifications: [
-                    { id: 1, message: "The Great Gatsby is overdue", type: "warning", date: "2024-09-01" },
-                    { id: 2, message: "New book recommendation available", type: "info", date: "2024-08-30" }
+                    { id: 1, message: "The Great Gatsby is overdue", type: "warning", date: "2024-09-16" },
+                    { id: 2, message: "To Kill a Mockingbird is due today", type: "warning", date: "2024-09-24" },
+                    { id: 3, message: "New book recommendation available", type: "info", date: "2024-09-20" }
                 ]
             },
-            "22459324@live.mut.ac": {
-                email: "22459324@live.mut.ac",
-                password: "ncnene",
+            "acnene@fake.com": {
+                email: "acnene@fake.com",
+                password: "acnene",
                 name: "NC Nene",
                 avatar: "images/NC Nene.jpg",
                 joinDate: "2024-02-01",
@@ -84,23 +87,24 @@ class AuthManager {
                         title: "Atomic Habits",
                         author: "James Clear",
                         cover: "images/Atomic Habits.png",
-                        borrowDate: "2024-08-20",
-                        dueDate: "2024-09-03",
+                        borrowDate: "2024-09-10",
+                        dueDate: "2024-09-24",
                         status: "active",
                         renewals: 0
                     }
                 ],
                 favorites: ["atomic-habits", "sapiens", "1984"],
                 readingHistory: [
-                    { bookId: "7-habits", completedDate: "2024-08-10", rating: 4 },
-                    { bookId: "mindset", completedDate: "2024-07-25", rating: 5 }
+                    { bookId: "7-habits", completedDate: "2024-08-10", rating: 4, pagesRead: 372 },
+                    { bookId: "mindset", completedDate: "2024-07-25", rating: 5, pagesRead: 276 },
+                    { bookId: "think-grow-rich", completedDate: "2024-09-05", rating: 4, pagesRead: 238 }
                 ],
                 readingGoals: {
-                    monthly: { target: 3, completed: 2 },
-                    yearly: { target: 36, completed: 18 }
+                    monthly: { target: 3, completed: 3 },
+                    yearly: { target: 36, completed: 21 }
                 },
-                readingStreak: 8,
-                totalPagesRead: 892,
+                readingStreak: 12,
+                totalPagesRead: 1124,
                 notifications: [
                     { id: 1, message: "Reading goal almost reached!", type: "success", date: "2024-08-28" }
                 ]
@@ -256,12 +260,40 @@ class AuthManager {
         const book = user.borrowedBooks[bookIndex];
         user.borrowedBooks.splice(bookIndex, 1);
         
-        // Add to reading history
-        user.readingHistory.push({
-            bookId: book.id,
-            completedDate: new Date().toISOString().split('T')[0],
-            rating: null
-        });
+        // Add to reading history with enhanced data
+        const completionDate = new Date().toISOString().split('T')[0];
+        const existingHistoryIndex = user.readingHistory.findIndex(h => h.bookId === book.id);
+        
+        if (existingHistoryIndex === -1) {
+            user.readingHistory.push({
+                bookId: book.id,
+                completedDate: completionDate,
+                rating: Math.floor(Math.random() * 2) + 4, // Random rating 4-5 for demo
+                pagesRead: Math.floor(Math.random() * 300) + 200 // Random pages 200-500
+            });
+        }
+
+        // Update reading goals
+        const currentMonth = new Date().getMonth();
+        const currentYear = new Date().getFullYear();
+        const completionMonth = new Date(completionDate).getMonth();
+        const completionYear = new Date(completionDate).getFullYear();
+        
+        if (currentMonth === completionMonth && currentYear === completionYear) {
+            user.readingGoals.monthly.completed++;
+        }
+        if (currentYear === completionYear) {
+            user.readingGoals.yearly.completed++;
+        }
+
+        // Update reading streak (simplified logic)
+        user.readingStreak++;
+        
+        // Update total pages read
+        const lastHistory = user.readingHistory[user.readingHistory.length - 1];
+        if (lastHistory && lastHistory.pagesRead) {
+            user.totalPagesRead += lastHistory.pagesRead;
+        }
 
         this.saveUsers();
         return { success: true, message: 'Book returned successfully' };
@@ -298,11 +330,181 @@ class AuthManager {
         return { success: true, message: 'Removed from favorites' };
     }
 
+    // Renew book
+    renewBook(bookId) {
+        if (!this.currentUser) return { success: false, message: 'Not logged in' };
+        
+        const user = this.users[this.currentUser.email];
+        if (!user) return { success: false, message: 'User not found' };
+
+        const book = user.borrowedBooks.find(book => book.id === bookId);
+        if (!book) {
+            return { success: false, message: 'Book not found in borrowed list' };
+        }
+
+        if (book.renewals >= 2) {
+            return { success: false, message: 'Maximum renewals reached (2 renewals allowed)' };
+        }
+
+        // Check if book is overdue
+        const today = new Date();
+        const dueDate = new Date(book.dueDate);
+        if (today > dueDate) {
+            return { success: false, message: 'Cannot renew overdue books. Please return first.' };
+        }
+
+        // Renew the book
+        book.renewals++;
+        const newDueDate = new Date(book.dueDate);
+        newDueDate.setDate(newDueDate.getDate() + 14);
+        book.dueDate = newDueDate.toISOString().split('T')[0];
+        
+        // Update book status
+        const daysDiff = Math.ceil((newDueDate - today) / (1000 * 60 * 60 * 24));
+        if (daysDiff <= 3) {
+            book.status = 'due-soon';
+        } else {
+            book.status = 'active';
+        }
+
+        this.saveUsers();
+        return { success: true, message: `Book renewed successfully! New due date: ${book.dueDate}` };
+    }
+
+    // Add notification
+    addNotification(message, type = 'info') {
+        if (!this.currentUser) return;
+        
+        const user = this.users[this.currentUser.email];
+        if (!user) return;
+
+        const notification = {
+            id: Date.now(),
+            message,
+            type,
+            date: new Date().toISOString().split('T')[0]
+        };
+
+        user.notifications.unshift(notification);
+        
+        // Keep only last 10 notifications
+        if (user.notifications.length > 10) {
+            user.notifications = user.notifications.slice(0, 10);
+        }
+
+        this.saveUsers();
+    }
+
+    // Dismiss notification
+    dismissNotification(notificationId) {
+        if (!this.currentUser) return { success: false, message: 'Not logged in' };
+        
+        const user = this.users[this.currentUser.email];
+        if (!user) return { success: false, message: 'User not found' };
+
+        const notificationIndex = user.notifications.findIndex(n => n.id === notificationId);
+        if (notificationIndex > -1) {
+            user.notifications.splice(notificationIndex, 1);
+            this.saveUsers();
+            return { success: true, message: 'Notification dismissed' };
+        }
+
+        return { success: false, message: 'Notification not found' };
+    }
+
+    // Update reading goals
+    updateReadingGoals(monthlyTarget, yearlyTarget) {
+        if (!this.currentUser) return { success: false, message: 'Not logged in' };
+        
+        const user = this.users[this.currentUser.email];
+        if (!user) return { success: false, message: 'User not found' };
+
+        user.readingGoals.monthly.target = monthlyTarget;
+        user.readingGoals.yearly.target = yearlyTarget;
+
+        this.saveUsers();
+        return { success: true, message: 'Reading goals updated successfully' };
+    }
+
+    // Get user statistics
+    getUserStats(email = null) {
+        const userEmail = email || (this.currentUser ? this.currentUser.email : null);
+        if (!userEmail) return null;
+
+        const user = this.users[userEmail];
+        if (!user) return null;
+
+        const today = new Date();
+        const overdueBooks = user.borrowedBooks.filter(book => new Date(book.dueDate) < today);
+        const dueSoonBooks = user.borrowedBooks.filter(book => {
+            const dueDate = new Date(book.dueDate);
+            const daysDiff = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+            return daysDiff <= 3 && daysDiff >= 0;
+        });
+
+        return {
+            borrowed: user.borrowedBooks.length,
+            overdue: overdueBooks.length,
+            dueSoon: dueSoonBooks.length,
+            favorites: user.favorites.length,
+            totalRead: user.readingHistory.length,
+            totalPages: user.totalPagesRead,
+            readingStreak: user.readingStreak,
+            monthlyProgress: user.readingGoals.monthly,
+            yearlyProgress: user.readingGoals.yearly,
+            notifications: user.notifications.length
+        };
+    }
+
     // Initialize authentication system
     init() {
         // Check if user is logged in and redirect accordingly
         if (window.location.pathname.includes('dashboard.html') && !this.currentUser) {
             window.location.href = 'login.html';
+        }
+
+        // Update book statuses on init
+        this.updateBookStatuses();
+    }
+
+    // Update book statuses based on due dates
+    updateBookStatuses() {
+        if (!this.currentUser) return;
+
+        const user = this.users[this.currentUser.email];
+        if (!user) return;
+
+        const today = new Date();
+        let statusUpdated = false;
+
+        user.borrowedBooks.forEach(book => {
+            const dueDate = new Date(book.dueDate);
+            const daysDiff = Math.ceil((dueDate - today) / (1000 * 60 * 60 * 24));
+
+            let newStatus;
+            if (daysDiff < 0) {
+                newStatus = 'overdue';
+            } else if (daysDiff <= 3) {
+                newStatus = 'due-soon';
+            } else {
+                newStatus = 'active';
+            }
+
+            if (book.status !== newStatus) {
+                book.status = newStatus;
+                statusUpdated = true;
+
+                // Add notification for status changes
+                if (newStatus === 'overdue') {
+                    this.addNotification(`${book.title} is now overdue`, 'warning');
+                } else if (newStatus === 'due-soon') {
+                    this.addNotification(`${book.title} is due soon (${daysDiff} days)`, 'warning');
+                }
+            }
+        });
+
+        if (statusUpdated) {
+            this.saveUsers();
         }
     }
 }

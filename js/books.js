@@ -407,17 +407,25 @@ class BookManager {
     updateBookAvailability(bookId, available) {
         if (this.books[bookId]) {
             this.books[bookId].available = available;
-            if (available) {
-                this.books[bookId].availableCopies = Math.min(
-                    this.books[bookId].availableCopies + 1,
-                    this.books[bookId].totalCopies
-                );
-            } else {
-                this.books[bookId].availableCopies = Math.max(
-                    this.books[bookId].availableCopies - 1,
-                    0
-                );
+            this.books[bookId].lastUpdated = new Date().toISOString();
+            
+            // Update borrowing statistics
+            if (!available) {
+                this.books[bookId].totalBorrows = (this.books[bookId].totalBorrows || 0) + 1;
+                this.books[bookId].popularity = (this.books[bookId].popularity || 0) + 1;
             }
+            
+            this.saveBooks();
+            
+            // Trigger update event for admin dashboard
+            const updateEvent = new CustomEvent('bookAvailabilityChanged', {
+                detail: {
+                    bookId: bookId,
+                    available: available,
+                    timestamp: new Date().toISOString()
+                }
+            });
+            document.dispatchEvent(updateEvent);
         }
     }
 

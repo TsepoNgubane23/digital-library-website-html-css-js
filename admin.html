@@ -737,6 +737,21 @@
 
         // Initialize admin manager
         const adminManager = new AdminManager();
+
+        // Listen for book transaction updates
+        document.addEventListener('updateAdminStats', function(e) {
+            if (typeof adminManager !== 'undefined') {
+                adminManager.loadStats();
+                adminManager.loadUsers();
+            }
+        });
+
+        document.addEventListener('bookAvailabilityChanged', function(e) {
+            if (typeof adminManager !== 'undefined') {
+                adminManager.loadStats();
+                adminManager.loadBooks();
+            }
+        });
     </script>
 </body>
 </html>
